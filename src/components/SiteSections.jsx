@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FEATURES, REVIEWS, STORES } from '../data/content.js';
 import { WaIcon } from './Icons.jsx';
 import { waLink } from '../lib/whatsapp.js';
@@ -143,6 +144,84 @@ export function Showrooms() {
             );
           })}
         </div>
+      </div>
+    </section>
+  );
+}
+
+const FAQS = [
+  {
+    q: 'Where are Furniture8home showrooms located in Guwahati?',
+    qAs: 'গুৱাহাটীত Furniture8home ৰ শ্ব’ৰুম ক’ত অৱস্থিত?',
+    a: 'Furniture8home has two physical showrooms in Guwahati: Showroom 1 on AT Road, Maligaon (Opposite The GYM, PIN 781011) and Showroom 2 in Paschim Boragaon (Opposite GYM Central, PIN 781035). Both floors stock physical display models you can sit on, touch the fabrics, and inspect before purchasing.',
+    aAs: 'গুৱাহাটীত আমাৰ দুটা শ্ব’ৰুম আছে: ১) মালিগাঁও এটি ৰোড (The GYM ৰ বিপৰীতে, পিন ৭৮১০১১) আৰু ২) পশ্চিম বৰাগাঁও (GYM Central ৰ বিপৰীতে, পিন ৭৮১০৩৫)। দুয়োটা মহলাতে আপুনি কাঠ পৰীক্ষা কৰি আৰু কুশ্বনত বহি পছন্দ কৰিব পাৰিব।'
+  },
+  {
+    q: 'Can I customize the size, fabric, and chaise layout of my sofa?',
+    qAs: 'মই মোৰ কোঠাৰ জোখ অনুযায়ী চোফা কাষ্টমাইজ কৰিব পাৰিমনে?',
+    a: 'Yes! Every sectional, L-shape sofa, and wooden settee is custom-built to your room’s exact measurements to the inch. You can choose from stain-resistant velvet, textured chenille, linen, and select right-facing, left-facing, or customized chaise layouts.',
+    aAs: 'হয়! প্ৰতিটো এল-চেকচনেল আৰু কাঠৰ চোফা আপোনাৰ কোঠাৰ জোখ অনুসৰি নিৰ্মাণ কৰা হয়। আপুনি দাগ-প্ৰতিৰোধী ভেলভেট, লিনেন কাপোৰ আৰু বাওঁফালৰ বা সোঁফালৰ চেইজ নিজৰ ইচ্ছা অনুসৰি বাছি লব পাৰে।'
+  },
+  {
+    q: 'What type of timber and cushioning materials are used?',
+    qAs: 'আপোনালোকৰ চোফাত কি কাঠ আৰু ফোম ব্যৱহাৰ কৰা হয়?',
+    a: 'We craft frames exclusively from 100% kiln-seasoned, chemically treated Assam Teak and seasoned Indian Sheesham, immune to termites and humidity distortion. We use commercial-grade 40D high-resilience foam over anti-sag pocket coils that retain bounce for 10+ years.',
+    aAs: 'আমাৰ চোফাৰ সকলো ফ্ৰেম ১০০% কিলন-ট্ৰিটেড অসম চেগুন (Assam Teak) আৰু চিচম কাঠেৰে নিৰ্মিত, যি উই-পৰুৱা আৰু সেমেকা বতাহৰ পৰা সম্পূৰ্ণ সুৰক্ষিত। কুশ্বনত উচ্চ ঘনত্বৰ 40D ফোম ব্যৱহাৰ কৰা হয়।'
+  },
+  {
+    q: 'Do you deliver and install furniture across Guwahati and Assam?',
+    qAs: 'গুৱাহাটী আৰু সমগ্ৰ অসমত ডেলিভাৰী আৰু ইনষ্টলেশ্বনৰ সুবিধা আছেনে?',
+    a: 'Yes, our dedicated in-house workshop team provides white-glove doorstep delivery, stair carry, and careful in-room installation across all neighborhoods of Guwahati (Maligaon, Boragaon, Zoo Road, Beltola, Dispur, Jalukbari, Khanapara) and throughout greater Assam.',
+    aAs: 'হয়, আমাৰ নিজা ৱৰ্কশ্বপৰ দলটোৱে গুৱাহাটীৰ সকলো প্ৰান্তত (মালিগাঁও, বৰাগাঁও, জু-ৰোড, বেলতলা, দিছপুৰ) আৰু সমগ্ৰ অসমত ঘৰৰ ভিতৰলৈ নি নিখুঁতভাৱে ইনষ্টলেশ্বন কৰি দিয়ে।'
+  },
+  {
+    q: 'How can I enquire or order furniture from Furniture8home?',
+    qAs: 'অৰ্ডাৰ বা দামৰ বিষয়ে কেনেকৈ যোগাযোগ কৰিব পাৰি?',
+    a: 'You can chat with our workshop specialists directly on WhatsApp at +91 60025 84075 with a photo of your living room or preferred furniture model, or visit our showrooms in Maligaon or Paschim Boragaon open every day from 10:00 AM to 8:30 PM.',
+    aAs: 'আপুনি আমাৰ হোৱাটছএপ নম্বৰ ৬০০২৫ ৮৪০৭৫ ত আপোনাৰ কোঠাৰ ফটো বা পছন্দৰ মডেল প্ৰেৰণ কৰি পোনপটীয়াকৈ কথা পাতিব পাৰে, বা মালিগাঁও আৰু বৰাগাঁও শ্ব’ৰুমত পুৱা ১০ বজাৰ পৰা নিশা ৮:৩০ বজালৈ আহিব পাৰে।'
+  }
+];
+
+export function FAQSection() {
+  const { lang } = useLang();
+  const [openIndex, setOpenIndex] = useState(0);
+
+  return (
+    <section className="faq-section wrap" id="faq" aria-labelledby="faqTitle">
+      <div className="section-eyebrow">{lang === 'as' ? 'সঘনাই সোধা প্ৰশ্ন' : 'Frequently Asked Questions'}</div>
+      <h2 className="section-title" id="faqTitle">{lang === 'as' ? 'গুৱাহাটীৰ গ্ৰাহকৰ প্ৰশ্নসমূহ' : 'Common Questions from Guwahati Homeowners'}</h2>
+      <p className="section-desc">{lang === 'as' ? 'কাষ্টম চোফা, কাঠৰ গুণমান, শ্ব’ৰুম আৰু ডেলিভাৰী সম্পৰ্কীয় প্ৰয়োজনীয় তথ্য' : 'Everything you need to know about timber quality, showroom visits, custom sizes & white-glove installation.'}</p>
+      
+      <div className="faq-accordion" role="region" aria-label="FAQ Accordion">
+        {FAQS.map((faq, idx) => {
+          const isOpen = openIndex === idx;
+          const question = lang === 'as' ? faq.qAs : faq.q;
+          const answer = lang === 'as' ? faq.aAs : faq.a;
+          return (
+            <div key={idx} className={`faq-item${isOpen ? ' open' : ''}`}>
+              <button
+                type="button"
+                className="faq-question-btn"
+                aria-expanded={isOpen}
+                aria-controls={`faq-answer-${idx}`}
+                id={`faq-btn-${idx}`}
+                onClick={() => setOpenIndex(isOpen ? -1 : idx)}
+              >
+                <span>{question}</span>
+                <span className="faq-chevron" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </span>
+              </button>
+              {isOpen && (
+                <div id={`faq-answer-${idx}`} className="faq-answer" role="region" aria-labelledby={`faq-btn-${idx}`}>
+                  <p>{answer}</p>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </section>
   );

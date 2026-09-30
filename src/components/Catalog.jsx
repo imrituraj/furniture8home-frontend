@@ -121,7 +121,7 @@ export default function Catalog({
               return (
                 <article className={`card${isStockOut ? ' is-stock-out' : ''}`} key={product.id}>
                   <div className="card-img-wrap" onClick={() => onOpen(product)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter') onOpen(product); }}>
-                    <img src={product.img} alt={item.name} loading="lazy" />
+                    <img src={product.img} alt={item.name} loading="lazy" width="400" height="300" decoding="async" />
                     {isStockOut && (
                       <span className="card-badge-stockout">
                         {lang === 'as' ? 'ষ্টক শেষ' : 'Stock Out'}

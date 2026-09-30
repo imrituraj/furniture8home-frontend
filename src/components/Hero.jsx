@@ -34,7 +34,7 @@ export default function Hero({ total }) {
         </div>
         <div className="hero-visual">
           <div className="hero-main-card">
-            <img src="images/original_site/hero.jpeg" alt={t('heroAlt')} />
+            <img src="images/original_site/hero.jpeg" alt={t('heroAlt')} width="640" height="480" fetchPriority="high" />
           </div>
           <div className="floating-badge badge-top">
             <div className="badge-icon-box">★</div>

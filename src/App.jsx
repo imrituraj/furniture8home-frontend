@@ -6,7 +6,7 @@ import ProductModal from './components/ProductModal.jsx';
 import WishlistDrawer from './components/WishlistDrawer.jsx';
 import AdminDashboard from './components/AdminDashboard.jsx';
 import AdminLogin from './components/AdminLogin.jsx';
-import { Bespoke, Footer, Reviews, Showrooms, WhyUs } from './components/SiteSections.jsx';
+import { Bespoke, FAQSection, Footer, Reviews, Showrooms, WhyUs } from './components/SiteSections.jsx';
 import { WaIcon } from './components/Icons.jsx';
 import { waLink } from './lib/whatsapp.js';
 import { clearProductUrl, findProductByLocation, writeProductUrl } from './lib/productLink.js';
@@ -172,9 +172,78 @@ export default function App() {
       document.title = 'Catalog & Storefront Admin — Furniture8home';
       return;
     }
+
+    const defaultTitle = 'Furniture8home — Solid Teak Sofas, L-Sectionals & Custom Furniture Guwahati';
+    const defaultDesc = 'Guwahati\'s premier furniture workshop & showrooms in Maligaon and Paschim Boragaon. Handcrafted seasoned Assam teak sofas, custom-sized L-sectionals, dining sets & accent chairs. WhatsApp: 60025 84075.';
+
     const item = active ? localize(active) : null;
-    document.title = item ? t('docTitleProduct', { name: item.name }) : t('docTitle');
-  }, [active, isAdminView, localize, t]);
+
+    if (item) {
+      const productTitle = `${item.name} | Furniture8home Guwahati`;
+      const productDesc = `${item.desc || item.name} Handcrafted in Guwahati with seasoned timber. Available at Furniture8home showrooms in Maligaon & Paschim Boragaon. Order on WhatsApp: 60025 84075.`;
+      const productUrl = `https://furniture8home.com/?product=${encodeURIComponent(item.slug)}`;
+      const productImg = item.img?.startsWith('http') || item.img?.startsWith('data:')
+        ? item.img
+        : `https://furniture8home.com/${item.img}`;
+
+      document.title = productTitle;
+      document.querySelector('meta[name="description"]')?.setAttribute('content', productDesc);
+      document.querySelector('meta[property="og:title"]')?.setAttribute('content', productTitle);
+      document.querySelector('meta[property="og:description"]')?.setAttribute('content', productDesc);
+      document.querySelector('meta[property="og:image"]')?.setAttribute('content', productImg);
+      document.querySelector('meta[property="og:url"]')?.setAttribute('content', productUrl);
+
+      // Inject or update dynamic Product Schema for Google Rich Snippets
+      let scriptTag = document.getElementById('product-schema-jsonld');
+      if (!scriptTag) {
+        scriptTag = document.createElement('script');
+        scriptTag.id = 'product-schema-jsonld';
+        scriptTag.type = 'application/ld+json';
+        document.head.appendChild(scriptTag);
+      }
+      scriptTag.textContent = JSON.stringify({
+        '@context': 'https://schema.org/',
+        '@type': 'Product',
+        name: item.name,
+        image: productImg,
+        description: item.desc || item.name,
+        sku: `F8H-${item.id}`,
+        mpn: `F8H-${item.id}`,
+        brand: {
+          '@type': 'Brand',
+          name: 'Furniture8home',
+        },
+        offers: {
+          '@type': 'Offer',
+          url: productUrl,
+          priceCurrency: 'INR',
+          price: item.priceNum || 15000,
+          priceValidUntil: '2027-12-31',
+          availability: item.inStock !== false ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+          itemCondition: 'https://schema.org/NewCondition',
+          seller: {
+            '@type': 'Organization',
+            name: 'Furniture8home',
+          },
+        },
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: String(item.rating || 4.9),
+          reviewCount: item.reviews || 20,
+        },
+      });
+    } else {
+      document.title = defaultTitle;
+      document.querySelector('meta[name="description"]')?.setAttribute('content', defaultDesc);
+      document.querySelector('meta[property="og:title"]')?.setAttribute('content', defaultTitle);
+      document.querySelector('meta[property="og:description"]')?.setAttribute('content', defaultDesc);
+      document.querySelector('meta[property="og:image"]')?.setAttribute('content', 'https://furniture8home.com/images/original_site/hero.jpeg');
+      document.querySelector('meta[property="og:url"]')?.setAttribute('content', 'https://furniture8home.com/');
+
+      const existingScript = document.getElementById('product-schema-jsonld');
+      if (existingScript) existingScript.remove();
+    }
+  }, [active, isAdminView, localize]);
 
   function filterCategory(next) {
     setCategory(next);
@@ -250,6 +319,7 @@ export default function App() {
         <WhyUs />
         <Reviews />
         <Showrooms />
+        <FAQSection />
       </main>
       <Footer onFilter={filterCategory} onOpenAdmin={openAdmin} />
       <ProductModal

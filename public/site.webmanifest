@@ -1,0 +1,16 @@
+{
+  "name": "Furniture8home — Guwahati Sofas & Custom Furniture",
+  "short_name": "Furniture8home",
+  "description": "Solid teak wood sofas, custom L-sectionals, dining and accent chairs crafted in Guwahati. Showrooms in Maligaon and Paschim Boragaon.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF7F2",
+  "theme_color": "#384832",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

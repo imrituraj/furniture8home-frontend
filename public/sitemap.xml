@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://furniture8home.com/</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/original_site/hero.jpeg</image:loc>
+      <image:title>Furniture8home Guwahati Handcrafted Furniture</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/#catalog</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/#bespoke</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/#why-us</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/#showrooms</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/#faq</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=aura-dusty-lilac-dining-chairs</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/chairs/B612_20221205_111922_652.jpg</image:loc>
+      <image:title>Aura Curved Dining Chairs — Dusty Lilac (Pair)</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=celeste-marine-blue-accent-chairs</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/chairs/B612_20221205_112007_914.jpg</image:loc>
+      <image:title>Celeste Velvet Dining Chairs — Marine Blue (Pair)</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=artisan-woven-dining-chair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/chairs/image.jpg</image:loc>
+      <image:title>Artisan Solid Oak Dining Chair — Natural Weave</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=nordic-cane-back-dining-chair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/chairs/image_1.jpg</image:loc>
+      <image:title>Kaziranga Cane-Back Dining Chair — Teak &amp; Rattan</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=heritage-spindle-windsor-chair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/chairs/image_2.jpg</image:loc>
+      <image:title>Heritage Spindle Windsor Chair — Walnut Finish</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=royal-indigo-chenille-l-sectional</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/0e06df108cba5f38f4c09e7d95643405.jpg</image:loc>
+      <image:title>Royal Indigo Chenille L-Sectional with Chaise</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=brahmaputra-charcoal-tufted-6-seater-sofa</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/3e769403acea61e2f0a02902364c1f63.jpg</image:loc>
+      <image:title>Brahmaputra Charcoal Tufted 6-Seater L-Sofa</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=kaziranga-warm-earth-sectional</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/783f46aab0d564bb19c97477c32749f1.jpg</image:loc>
+      <image:title>Kaziranga Warm Earth 5-Seater Sectional</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=nilachal-slate-grey-low-profile-sectional</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/B612_20220730_111518_887.jpg</image:loc>
+      <image:title>Nilachal Slate Grey Low-Profile Sectional</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=dispur-custom-velvet-sectional-royal-mauve</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/IMG-20210802-WA0015.jpg</image:loc>
+      <image:title>Dispur Bespoke Velvet Sectional — Royal Mauve</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=beltola-modern-corner-suite-forest-spruce</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/IMG-20210805-WA0001.jpg</image:loc>
+      <image:title>Beltola Modern Corner Suite — Forest Spruce</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=saraighat-oatmeal-linen-luxury-sectional</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/IMG-20210919-WA0047.jpg</image:loc>
+      <image:title>Saraighat Oatmeal Linen Luxury Sectional</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=guwahati-compact-corner-sectional</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/IMG-20210919-WA0049.jpg</image:loc>
+      <image:title>Guwahati Compact Corner Sectional — Natural Sand</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=kamakhya-grand-chesterfield-l-sectional</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/IMG-20230106-WA0003.jpg</image:loc>
+      <image:title>Kamakhya Grand Chesterfield L-Sectional</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=furniture8home-signature-workshop-sectional</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/IMG_20210625_095157.jpg</image:loc>
+      <image:title>Furniture8home Signature Workshop Sectional</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=umananda-sky-blue-plush-corner-suite</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/Picsart_22-06-02_12-01-50-691.jpg</image:loc>
+      <image:title>Umananda Sky Blue Plush Corner Suite</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=haflong-contemporary-dual-tone-sectional</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/Picsart_22-06-02_12-03-55-289.jpg</image:loc>
+      <image:title>Haflong Contemporary Dual-Tone Sectional</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=assam-heritage-suede-l-sofa</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/Screenshot_20210405-102214~2.png</image:loc>
+      <image:title>Assam Heritage Suede L-Sofa — Cocoa Brown</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=horizon-two-tone-chenille-sectional</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/blue-and-grey-chenille-sofiabluegreylhd-flipkart-perfect-homes-original-imafw9nh8zn2gwzb.jpeg</image:loc>
+      <image:title>Horizon Two-Tone Chenille L-Sectional (Blue &amp; Grey)</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=emerald-peak-velvet-corner-sectional</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/lsofa/image.jpg</image:loc>
+      <image:title>Emerald Peak Velvet Corner Sectional</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=sivasagar-solid-teak-3-seater</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/woodensofa/2223b117512a2b4decec1a5c0d5163e2.jpg</image:loc>
+      <image:title>Sivasagar Solid Teak 3-Seater Settee</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=tezpur-royal-carved-teak-sofa-set</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/woodensofa/3cf5b908c9a37d5f5e02e8350d113a3e.jpg</image:loc>
+      <image:title>Tezpur Royal Carved Teakwood Living Suite</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=majuli-minimalist-teak-daybed-sofa</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/woodensofa/5a927d09f36add072c1d54006aa5ea5e.jpg</image:loc>
+      <image:title>Majuli Minimalist Teakwood Daybed Sofa</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=jorhat-sheesham-3-seater-sofa</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/woodensofa/5ca9e97f533e7b4d43a5add7da48e83c.jpg</image:loc>
+      <image:title>Jorhat Handcrafted Sheesham 3-Seater Sofa</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=darrang-classic-timber-box-sofa</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/woodensofa/60a647e803c2db5282ddcc30ee6e2d88.jpg</image:loc>
+      <image:title>Darrang Classic Timber Box Sofa with Magazine Arm</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=heritage-assam-teak-carved-3-seater</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/woodensofa/96559ad09e0273f7557159c197d07e48.jpg</image:loc>
+      <image:title>Heritage Assam Teak Carved 3-Seater</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=ahom-royal-high-back-wooden-set</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/woodensofa/9cdb81a7810199c4f74fd133a1818d4d.jpg</image:loc>
+      <image:title>Ahom Royal High-Back Carved Teakwood Sofa</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=barpeta-traditional-slat-back-teak-sofa</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/woodensofa/aa367fbcb5102fe9337e971952df1253.jpg</image:loc>
+      <image:title>Barpeta Traditional Slat-Back Teak Sofa</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=golaghat-natural-teak-wood-lounger</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/woodensofa/d0c2882cd15582c76fd646bfb87c3668.jpg</image:loc>
+      <image:title>Golaghat Natural Teak Wood Lounger Sofa</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=cachar-carved-living-room-suite</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/woodensofa/d3079166b5c194291978399a02816478.jpg</image:loc>
+      <image:title>Cachar Carved Living Room Settee</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=nagaon-mid-century-solid-sheesham-sofa</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/woodensofa/f30ae6a4bc4c457afeb28a6e27d28a10.jpg</image:loc>
+      <image:title>Nagaon Mid-Century Solid Sheesham Sofa</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=elysian-blush-pink-tub-lounge-chair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/singlechair/5d54248074aaac490842264668b74d3d.jpg</image:loc>
+      <image:title>Elysian Blush Velvet Tub Lounge Chair</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=victoria-royal-carved-accent-chair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/singlechair/7330890bdd2f8130113c24e0a4736a46.jpg</image:loc>
+      <image:title>Victoria Royal Carved Accent Chair</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=riviera-mustard-yellow-velvet-club-chair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/singlechair/B612_20220902_203507_814.jpg</image:loc>
+      <image:title>Riviera Fluted Club Chair — Mustard Gold</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=brahmaputra-workshop-single-reading-chair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/singlechair/IMG-20210518-WA0005.jpg</image:loc>
+      <image:title>Brahmaputra Workshop High-Back Reading Chair</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=florence-high-back-tufted-reading-chair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/singlechair/IMG-20210914-WA0001.jpg</image:loc>
+      <image:title>Florence Diamond-Tufted Reading Chair</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=regent-mid-century-teak-armchair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/singlechair/IMG_20220418_184149_490.jpg</image:loc>
+      <image:title>Regent Sculpted Teak Lounge Armchair</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=cleo-scalloped-velvet-accent-chair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/singlechair/chairs_0f09d7e5-17eb-41a5-86d0-a6c2556dbd9a_600x.jpg</image:loc>
+      <image:title>Cleo Scalloped Shell Velvet Accent Chair</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=oslo-modern-boucle-lounge-chair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/singlechair/homedecor_2e182883-9ea9-4bda-82c1-85f3fa91286c_600x.jpg</image:loc>
+      <image:title>Oslo Modern Bouclé Lounge Chair</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=solstice-tufted-occasional-chair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/singlechair/image_1.jpg</image:loc>
+      <image:title>Solstice Tufted Occasional Chair — Amber</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=bellamy-tufted-dining-chair-ivory</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/original_site/prod_1_bellamy_tufted_dining_chair_ivory.jpeg</image:loc>
+      <image:title>Bellamy Tufted Dining Chair — Ivory (Pair)</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=bellamy-tufted-dining-chair-grey</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/original_site/prod_2_bellamy_tufted_dining_chair_grey.jpeg</image:loc>
+      <image:title>Bellamy Tufted Dining Chair — Grey (Pair)</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=rosalind-channel-back-armchair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/original_site/prod_3_rosalind_channel_back_armchair.jpeg</image:loc>
+      <image:title>Rosalind Channel-Back Armchair (Pair)</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=ember-round-lounge-chair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/original_site/prod_4_ember_round_lounge_chair.jpeg</image:loc>
+      <image:title>Ember Round Lounge Chair — Teakwood</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=meadow-floral-wingback-ottoman</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/original_site/prod_5_meadow_floral_wingback_ottoman.jpeg</image:loc>
+      <image:title>Meadow Floral Wingback + Matching Ottoman</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=willow-velvet-armchair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/original_site/prod_6_willow_velvet_armchair.jpeg</image:loc>
+      <image:title>Willow Sage Velvet Armchair</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=harlow-barrel-chair-ottoman</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/original_site/prod_7_harlow_barrel_chair_ottoman.jpeg</image:loc>
+      <image:title>Harlow Barrel Chair + Matching Ottoman</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=camden-tufted-wingback</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/original_site/prod_8_camden_tufted_wingback.jpeg</image:loc>
+      <image:title>Camden Tufted Wingback Armchair</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://furniture8home.com/?product=dalton-wingback-chair</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/original_site/prod_9_dalton_wingback_chair.jpeg</image:loc>
+      <image:title>Dalton Modern Wingback Chair — Slate Grey</image:title>
+    </image:image>
+  </url>
+
+</urlset>

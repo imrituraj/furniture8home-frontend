@@ -1,0 +1,26 @@
+# Robots.txt for Furniture8home.com (Guwahati, Assam)
+# Website: https://furniture8home.com/
+
+User-agent: *
+Allow: /
+Disallow: /#admin
+Disallow: /*?admin*
+Disallow: /*&admin*
+
+# Disallow internal search query duplication
+Clean-param: admin /
+
+# Googlebot specific rules
+User-agent: Googlebot
+Allow: /
+Allow: /images/
+Allow: /images/*
+Disallow: /#admin
+
+# Image Crawlers
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /images/*
+
+# Sitemaps
+Sitemap: https://furniture8home.com/sitemap.xml
