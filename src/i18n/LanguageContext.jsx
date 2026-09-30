@@ -30,7 +30,7 @@ export function LanguageProvider({ children }) {
     }
     function localize(product) {
       if (lang !== 'as' || !product) return product;
-      const extra = PRODUCTS_AS[product.id] || {};
+      const extra = product.as || PRODUCTS_AS[product.id] || {};
       return {
         ...product,
         name: extra.name || product.name,

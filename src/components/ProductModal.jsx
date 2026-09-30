@@ -27,15 +27,21 @@ const CAT_KEY = {
 };
 
 export default function ProductModal({ product, fabric, chaise, saved, onClose, onFabric, onChaise, onToggleWish }) {
-  const { t, localize } = useLang();
+  const { lang, t, localize } = useLang();
   if (!product) return null;
 
   const item = localize(product);
+  const isStockOut = product.inStock === false;
   const fabricLabel = t(FABRIC_KEY[fabric] || 'fabricNavy');
   const chaiseLabel = t(CHAISE_KEY[chaise] || 'chaiseRight');
   const specs = [`${t('fabricTitle')}: ${fabricLabel}`];
   if (product.cat === 'Sectionals') specs.push(`${t('chaiseTitle')}: ${chaiseLabel}`);
-  const orderText = t('waOrder', { name: item.name, price: product.price, specs: specs.join(', ') });
+  
+  const orderText = isStockOut
+    ? (lang === 'as'
+      ? `নমস্কাৰ Furniture8home, মই "${item.name}" (${product.price}, ${specs.join(', ')}) ৰ বিষয়ে জানিব বিচাৰোঁ। বৰ্তমান ষ্টক শেষ বুলি দেখা গৈছে, মই কাষ্টম অৰ্ডাৰ দিব পাৰিমনে?`
+      : `Hi Furniture8home, I would like to place a custom pre-order for "${item.name}" (${product.price}, ${specs.join(', ')}) which is currently marked as out of stock.`)
+    : t('waOrder', { name: item.name, price: product.price, specs: specs.join(', ') });
 
   return (
     <div className="modal-overlay open" role="dialog" aria-modal="true" aria-label={item.name} onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
@@ -53,6 +59,12 @@ export default function ProductModal({ product, fabric, chaise, saved, onClose, 
           </div>
           <div className="modal-info">
             <div className="modal-breadcrumbs">{t('sku', { cat: t(CAT_KEY[product.cat] || 'catAccent'), id: product.id })}</div>
+            {isStockOut && (
+              <div className="modal-stockout-banner">
+                <span>⚠️</span>
+                <span>{lang === 'as' ? 'বৰ্তমান ষ্টক শেষ — কাষ্টম অৰ্ডাৰত উপলব্ধ' : 'Currently Out of Stock — Available on Custom Order'}</span>
+              </div>
+            )}
             <h2 className="modal-title">{item.name}</h2>
             <div className="modal-price-row">
               <div className="modal-price">{product.price}</div>
@@ -96,7 +108,7 @@ export default function ProductModal({ product, fabric, chaise, saved, onClose, 
             <div className="modal-actions">
               <a href={waLink(orderText)} target="_blank" rel="noopener noreferrer" className="btn-wa-modal">
                 <WaIcon size={20} />
-                <span>{t('enquireOrder')}</span>
+                <span>{isStockOut ? (lang === 'as' ? 'কাষ্টম অৰ্ডাৰৰ বাবে যোগাযোগ কৰক' : 'Enquire for Custom Restock / Order') : t('enquireOrder')}</span>
               </a>
               <div className="modal-action-row">
                 <ShareButton product={item} className="btn-call-modal" label={t('share')} />

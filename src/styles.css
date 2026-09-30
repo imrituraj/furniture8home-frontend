@@ -823,6 +823,50 @@
       }
     }
 
+    .card.is-stock-out .card-img-wrap img {
+      filter: grayscale(20%);
+      opacity: 0.88;
+    }
+
+    .card-badge-stockout {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #b91c1c;
+      color: #ffffff !important;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 2px 8px rgba(185, 28, 28, 0.35);
+      z-index: 3;
+    }
+
+    .card.is-stock-out .card-badge {
+      top: 40px;
+    }
+
+    .modal-stockout-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(185, 28, 28, 0.1);
+      color: #b91c1c;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(185, 28, 28, 0.25);
+      margin-bottom: 12px;
+    }
+    :root[data-theme="dark"] .modal-stockout-banner {
+      background: rgba(239, 68, 68, 0.15);
+      color: #fca5a5;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
     .wishlist-btn {
       position: absolute;
       top: 12px;

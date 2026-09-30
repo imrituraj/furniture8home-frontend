@@ -10,6 +10,7 @@ export default function Header({
   wishlistCount,
   onOpenWishlist,
   onToggleTheme,
+  onOpenAdmin,
 }) {
   const { lang, t, toggleLang } = useLang();
 
@@ -56,6 +57,14 @@ export default function Header({
             <HeartIcon size={18} />
             {wishlistCount > 0 && <span className="badge-count">{wishlistCount}</span>}
           </button>
+          {onOpenAdmin && (
+            <button className="icon-btn" title="Catalog & Pricing Admin" aria-label="Catalog & Pricing Admin" onClick={onOpenAdmin}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+          )}
           <a className="btn-wa-header" href={waLink(t('waVisit'))} target="_blank" rel="noopener noreferrer">
             <WaIcon />
             <span>{t('whatsapp')}</span>
@@ -71,6 +80,27 @@ export default function Header({
         <a href="#bespoke" onClick={onCloseMenu}>{t('mobCustom')}</a>
         <a href="#showrooms" onClick={onCloseMenu}>{t('mobShowrooms')}</a>
         <a href={waLink(t('waGeneral'))} target="_blank" rel="noopener noreferrer">{t('whatsappNumber')}</a>
+        {onOpenAdmin && (
+          <button
+            type="button"
+            onClick={() => { onCloseMenu(); onOpenAdmin(); }}
+            style={{
+              textAlign: 'left',
+              padding: '14px 0',
+              borderTop: '1px solid var(--line)',
+              color: 'var(--brand-brass)',
+              fontWeight: 600,
+              fontSize: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              cursor: 'pointer',
+            }}
+          >
+            <span>⚙️</span>
+            <span>Catalog &amp; Pricing Admin</span>
+          </button>
+        )}
       </nav>
     </header>
   );

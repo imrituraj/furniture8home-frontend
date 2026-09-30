@@ -148,7 +148,7 @@ export function Showrooms() {
   );
 }
 
-export function Footer({ onFilter }) {
+export function Footer({ onFilter, onOpenAdmin }) {
   const { t } = useLang();
   return (
     <footer>
@@ -187,7 +187,19 @@ export function Footer({ onFilter }) {
       </div>
       <div className="wrap foot-bottom">
         <div>{t('copyright')}</div>
-        <div>{t('designed')}</div>
+        <div style={{ display: 'flex', gap: '18px', alignItems: 'center' }}>
+          {onOpenAdmin && (
+            <button
+              type="button"
+              onClick={onOpenAdmin}
+              style={{ color: 'var(--ink-muted)', fontSize: '13px', textDecoration: 'underline', cursor: 'pointer' }}
+              title="Catalog & Pricing Admin Dashboard"
+            >
+              Catalog Admin
+            </button>
+          )}
+          <div>{t('designed')}</div>
+        </div>
       </div>
     </footer>
   );

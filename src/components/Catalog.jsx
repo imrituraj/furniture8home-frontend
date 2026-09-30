@@ -43,7 +43,7 @@ export default function Catalog({
   onOpen,
   onToggleWish,
 }) {
-  const { t, localize } = useLang();
+  const { lang, t, localize } = useLang();
 
   return (
     <>
@@ -111,10 +111,22 @@ export default function Catalog({
             {visible.map((product) => {
               const item = localize(product);
               const saved = wishlist.includes(product.id);
+              const isStockOut = product.inStock === false;
+              const waMessage = isStockOut
+                ? (lang === 'as'
+                  ? `নমস্কাৰ Furniture8home, মই "${item.name}" (${product.price}) ৰ বিষয়ে জানিব বিচাৰোঁ। বৰ্তমান ষ্টক শেষ বুলি দেখা গৈছে, মই অৰ্ডাৰ দিব পাৰিমনে?`
+                  : `Hi Furniture8home, I would like to enquire about ordering "${item.name}" (${product.price}) which is currently marked as stock out.`)
+                : t('waCard', { name: item.name, price: product.price });
+
               return (
-                <article className="card" key={product.id}>
+                <article className={`card${isStockOut ? ' is-stock-out' : ''}`} key={product.id}>
                   <div className="card-img-wrap" onClick={() => onOpen(product)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter') onOpen(product); }}>
                     <img src={product.img} alt={item.name} loading="lazy" />
+                    {isStockOut && (
+                      <span className="card-badge-stockout">
+                        {lang === 'as' ? 'ষ্টক শেষ' : 'Stock Out'}
+                      </span>
+                    )}
                     {item.badge && <span className="card-badge">{item.badge}</span>}
                     <button className={`wishlist-btn${saved ? ' active' : ''}`} type="button" title={t('saveWish')} aria-label={saved ? t('saved') : t('saveWish')} onClick={(e) => { e.stopPropagation(); onToggleWish(product.id); }}>
                       <HeartIcon filled={saved} />
@@ -131,11 +143,15 @@ export default function Catalog({
                     <div className="card-footer">
                       <div className="card-price-box">
                         <span className="card-price">{product.price}</span>
-                        <span className="card-price-sub">{t('deliveryReady')}</span>
+                        <span className="card-price-sub">
+                          {isStockOut
+                            ? (lang === 'as' ? 'অনুগ্ৰহ কৰি অৰ্ডাৰ কৰক' : 'Made to Order')
+                            : t('deliveryReady')}
+                        </span>
                       </div>
                       <div className="card-actions">
                         <ShareButton product={item} className="card-wa-btn" />
-                        <a href={waLink(t('waCard', { name: item.name, price: product.price }))} target="_blank" rel="noopener noreferrer" className="card-wa-btn" title={t('enquireWa')} aria-label={t('enquireWa')} onClick={(e) => e.stopPropagation()}>
+                        <a href={waLink(waMessage)} target="_blank" rel="noopener noreferrer" className="card-wa-btn" title={isStockOut ? 'Enquire on WhatsApp' : t('enquireWa')} aria-label={isStockOut ? 'Enquire on WhatsApp' : t('enquireWa')} onClick={(e) => e.stopPropagation()}>
                           <WaIcon />
                         </a>
                       </div>

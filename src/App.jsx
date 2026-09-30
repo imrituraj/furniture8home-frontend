@@ -1,15 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import products from './data/products.json';
 import Header from './components/Header.jsx';
 import Hero from './components/Hero.jsx';
 import Catalog from './components/Catalog.jsx';
 import ProductModal from './components/ProductModal.jsx';
 import WishlistDrawer from './components/WishlistDrawer.jsx';
+import AdminDashboard from './components/AdminDashboard.jsx';
+import AdminLogin from './components/AdminLogin.jsx';
 import { Bespoke, Footer, Reviews, Showrooms, WhyUs } from './components/SiteSections.jsx';
 import { WaIcon } from './components/Icons.jsx';
 import { waLink } from './lib/whatsapp.js';
 import { clearProductUrl, findProductByLocation, writeProductUrl } from './lib/productLink.js';
 import { useLang } from './i18n/LanguageContext.jsx';
+import { getPublicCatalog, isAdminAuthenticated } from './lib/catalogStorage.js';
 
 const WISH_KEY = 'f8h_wishlist';
 const THEME_KEY = 'f8h_theme';
@@ -23,18 +25,43 @@ function readWishlist() {
   }
 }
 
+function checkIsAdminRoute() {
+  if (typeof window === 'undefined') return false;
+  return window.location.hash === '#admin' || new URLSearchParams(window.location.search).has('admin');
+}
+
 export default function App() {
   const { t, localize } = useLang();
+  const [products, setProducts] = useState(getPublicCatalog);
   const [category, setCategory] = useState('all');
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState('featured');
   const [wishlist, setWishlist] = useState(readWishlist);
-  const [active, setActive] = useState(() => findProductByLocation(products));
+  const [active, setActive] = useState(() => findProductByLocation(getPublicCatalog()));
   const [fabric, setFabric] = useState('Royal Navy');
   const [chaise, setChaise] = useState('Right Facing Chaise');
   const [menuOpen, setMenuOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [showTop, setShowTop] = useState(false);
+
+  // Admin routing & authentication state
+  const [isAdminView, setIsAdminView] = useState(checkIsAdminRoute);
+  const [isAuthenticated, setIsAuthenticated] = useState(isAdminAuthenticated);
+
+  // Sync products when catalogStorage updates
+  useEffect(() => {
+    function onCatalogChange() {
+      const publicList = getPublicCatalog();
+      setProducts(publicList);
+      // Update active modal if it was edited
+      setActive((prev) => {
+        if (!prev) return null;
+        return publicList.find((p) => p.id === prev.id) || null;
+      });
+    }
+    window.addEventListener('f8h_catalog_changed', onCatalogChange);
+    return () => window.removeEventListener('f8h_catalog_changed', onCatalogChange);
+  }, []);
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -43,7 +70,19 @@ export default function App() {
         const matchCat = category === 'all' || product.cat === category;
         if (!q) return matchCat;
         const item = localize(product);
-        const haystack = [product.name, product.desc, item.name, item.desc, product.cat, product.material, product.badge, item.badge].join(' ').toLowerCase();
+        const haystack = [
+          product.name,
+          product.desc,
+          item.name,
+          item.desc,
+          product.cat,
+          product.material,
+          product.badge,
+          item.badge,
+        ]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase();
         return matchCat && haystack.includes(q);
       })
       .sort((a, b) => {
@@ -53,7 +92,7 @@ export default function App() {
         if (sort === 'name-asc') return localize(a).name.localeCompare(localize(b).name, 'as');
         return a.id - b.id;
       });
-  }, [category, query, sort, localize]);
+  }, [category, products, query, sort, localize]);
 
   const savedProducts = products.filter((product) => wishlist.includes(product.id));
 
@@ -63,7 +102,9 @@ export default function App() {
 
   useEffect(() => {
     document.body.style.overflow = active || drawerOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [active, drawerOpen]);
 
   const closeProduct = useCallback(() => {
@@ -78,6 +119,18 @@ export default function App() {
     writeProductUrl(product.slug, { replace });
   }, []);
 
+  const openAdmin = useCallback(() => {
+    setIsAdminView(true);
+    window.location.hash = 'admin';
+  }, []);
+
+  const exitAdmin = useCallback(() => {
+    setIsAdminView(false);
+    if (window.location.hash === '#admin') {
+      window.history.pushState(null, '', window.location.pathname + (window.location.search ? window.location.search : ''));
+    }
+  }, []);
+
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 400);
     const onKey = (event) => {
@@ -86,9 +139,16 @@ export default function App() {
         setDrawerOpen(false);
         setMenuOpen(false);
       }
+      // Alt + A shortcut to toggle Admin
+      if (event.altKey && (event.key === 'a' || event.key === 'A')) {
+        event.preventDefault();
+        setIsAdminView((prev) => !prev);
+      }
     };
     const onPop = () => {
-      const product = findProductByLocation(products);
+      const isNowAdmin = checkIsAdminRoute();
+      setIsAdminView(isNowAdmin);
+      const product = findProductByLocation(getPublicCatalog());
       setActive(product);
       if (product) {
         setFabric('Royal Navy');
@@ -98,19 +158,23 @@ export default function App() {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('keydown', onKey);
     window.addEventListener('popstate', onPop);
+    window.addEventListener('hashchange', onPop);
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('keydown', onKey);
       window.removeEventListener('popstate', onPop);
+      window.removeEventListener('hashchange', onPop);
     };
   }, [closeProduct]);
 
   useEffect(() => {
+    if (isAdminView) {
+      document.title = 'Catalog & Storefront Admin — Furniture8home';
+      return;
+    }
     const item = active ? localize(active) : null;
-    document.title = item
-      ? t('docTitleProduct', { name: item.name })
-      : t('docTitle');
-  }, [active, localize, t]);
+    document.title = item ? t('docTitleProduct', { name: item.name }) : t('docTitle');
+  }, [active, isAdminView, localize, t]);
 
   function filterCategory(next) {
     setCategory(next);
@@ -138,6 +202,22 @@ export default function App() {
     setSort('featured');
   }
 
+  // If in Admin view, render Admin Dashboard or Login prompt
+  if (isAdminView) {
+    if (!isAuthenticated) {
+      return <AdminLogin onLoginSuccess={() => setIsAuthenticated(true)} onCancel={exitAdmin} />;
+    }
+    return (
+      <AdminDashboard
+        onExit={exitAdmin}
+        onOpenProduct={(p) => {
+          exitAdmin();
+          openProduct(p);
+        }}
+      />
+    );
+  }
+
   return (
     <>
       <Header
@@ -148,6 +228,7 @@ export default function App() {
         wishlistCount={wishlist.length}
         onOpenWishlist={() => setDrawerOpen(true)}
         onToggleTheme={toggleTheme}
+        onOpenAdmin={openAdmin}
       />
       <main>
         <Hero total={products.length} />
@@ -170,7 +251,7 @@ export default function App() {
         <Reviews />
         <Showrooms />
       </main>
-      <Footer onFilter={filterCategory} />
+      <Footer onFilter={filterCategory} onOpenAdmin={openAdmin} />
       <ProductModal
         product={active}
         fabric={fabric}
@@ -181,14 +262,34 @@ export default function App() {
         onChaise={setChaise}
         onToggleWish={toggleWish}
       />
-      <WishlistDrawer open={drawerOpen} products={savedProducts} onClose={() => setDrawerOpen(false)} onToggle={toggleWish} />
-      <a className="floating-wa-btn" href={waLink(t('waFloat'))} target="_blank" rel="noopener noreferrer" title={t('floatWa')}>
+      <WishlistDrawer
+        open={drawerOpen}
+        products={savedProducts}
+        onClose={() => setDrawerOpen(false)}
+        onToggle={toggleWish}
+      />
+      <a
+        className="floating-wa-btn"
+        href={waLink(t('waFloat'))}
+        target="_blank"
+        rel="noopener noreferrer"
+        title={t('floatWa')}
+      >
         <div className="pulse-dot" />
         <WaIcon size={20} />
         <span>{t('floatCta')}</span>
       </a>
-      <button className={`back-to-top${showTop ? ' visible' : ''}`} title={t('backTop')} aria-label={t('backTop')} type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" /></svg>
+      <button
+        className={`back-to-top${showTop ? ' visible' : ''}`}
+        title={t('backTop')}
+        aria-label={t('backTop')}
+        type="button"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <line x1="12" y1="19" x2="12" y2="5" />
+          <polyline points="5 12 12 5 19 12" />
+        </svg>
       </button>
     </>
   );
