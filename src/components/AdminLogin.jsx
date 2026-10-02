@@ -95,10 +95,6 @@ export default function AdminLogin({ onLoginSuccess, onCancel }) {
               </button>
             )}
           </div>
-
-          <div className="admin-hint-box">
-            <span>Default PIN: <strong>8888</strong></span>
-          </div>
         </form>
       </div>
     </div>

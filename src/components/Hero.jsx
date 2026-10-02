@@ -1,4 +1,4 @@
-import { WaIcon } from './Icons.jsx';
+import { ArrowIcon, StarIcon, WaIcon } from './Icons.jsx';
 import { waLink } from '../lib/whatsapp.js';
 import { useLang } from '../i18n/LanguageContext.jsx';
 
@@ -6,49 +6,47 @@ export default function Hero({ total }) {
   const { t } = useLang();
 
   return (
-    <section className="hero wrap" id="hero">
-      <div className="hero-grid">
-        <div>
-          <div className="eyebrow-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" /></svg>
-            {t('eyebrow')}
-          </div>
-          <h1>{t('heroTitle')} <span className="highlight">{t('heroHighlight')}</span></h1>
+    <section className="hero" id="hero">
+      <div className="wrap hero-grid">
+        <div className="hero-copy">
+          <div className="eyebrow">{t('eyebrow')}</div>
+          <h1>
+            {t('heroTitle')} <em>{t('heroHighlight')}</em>
+          </h1>
           <p className="hero-lead">{t('heroLead')}</p>
           <div className="hero-actions">
-            <a className="btn-primary" href="#catalog">
+            <a className="btn-primary btn-lg" href="#catalog">
               {t('explore', { n: total })}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19" /><polyline points="19 12 12 19 5 12" /></svg>
+              <ArrowIcon size={17} />
             </a>
-            <a className="btn-secondary" href={waLink(t('waCustom'))} target="_blank" rel="noopener noreferrer">
+            <a className="btn-secondary btn-lg" href={waLink(t('waCustom'))} target="_blank" rel="noopener noreferrer">
               <WaIcon size={16} />
               {t('customRequest')}
             </a>
           </div>
-          <div className="hero-stats">
-            <div className="stat-item"><span className="num">2</span><span className="label">{t('statShowrooms')}</span></div>
-            <div className="stat-item"><span className="num">{total}</span><span className="label">{t('statDesigns')}</span></div>
-            <div className="stat-item"><span className="num">{t('statCustomNum')}</span><span className="label">{t('statCustom')}</span></div>
-            <div className="stat-item"><span className="num" style={{ fontSize: 20 }}>60025</span><span className="label">{t('statWa')}</span></div>
-          </div>
+          <dl className="hero-proof">
+            <div><dt>2</dt><dd>{t('statShowrooms')}</dd></div>
+            <div><dt>{total}</dt><dd>{t('statDesigns')}</dd></div>
+            <div><dt>10</dt><dd>{t('proofWarranty')}</dd></div>
+          </dl>
         </div>
-        <div className="hero-visual">
-          <div className="hero-main-card">
+
+        <div className="hero-media">
+          <figure className="hero-img hero-img--main">
             <img src="images/original_site/hero.jpeg" alt={t('heroAlt')} width="640" height="480" fetchPriority="high" />
-          </div>
-          <div className="floating-badge badge-top">
-            <div className="badge-icon-box">★</div>
-            <div>
-              <div className="badge-title">{t('badgeSit')}</div>
-              <div className="badge-sub">{t('badgeFloors')}</div>
-            </div>
-          </div>
-          <div className="floating-badge badge-bottom">
-            <div className="badge-icon-box">🪵</div>
-            <div>
-              <div className="badge-title">{t('badgeTeak')}</div>
-              <div className="badge-sub">{t('badgeFoam')}</div>
-            </div>
+          </figure>
+          <figure className="hero-img hero-img--a">
+            <img src="images/woodensofa/2223b117512a2b4decec1a5c0d5163e2.jpg" alt="" width="320" height="320" loading="lazy" />
+          </figure>
+          <figure className="hero-img hero-img--b">
+            <img src="images/lsofa/0e06df108cba5f38f4c09e7d95643405.jpg" alt="" width="320" height="320" loading="lazy" />
+          </figure>
+          <div className="hero-tag">
+            <span className="hero-tag-icon"><StarIcon size={15} /></span>
+            <span>
+              <strong>{t('badgeSit')}</strong>
+              <small>{t('badgeFloors')}</small>
+            </span>
           </div>
         </div>
       </div>
