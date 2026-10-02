@@ -7,7 +7,7 @@ import WishlistDrawer from './components/WishlistDrawer.jsx';
 import AdminDashboard from './components/AdminDashboard.jsx';
 import AdminLogin from './components/AdminLogin.jsx';
 import { Bespoke, FAQSection, Footer, Reviews, Showrooms, WhyUs } from './components/SiteSections.jsx';
-import { WaIcon } from './components/Icons.jsx';
+import { ArrowUpIcon, WaIcon } from './components/Icons.jsx';
 import { waLink } from './lib/whatsapp.js';
 import { clearProductUrl, findProductByLocation, writeProductUrl } from './lib/productLink.js';
 import { useLang } from './i18n/LanguageContext.jsx';
@@ -25,6 +25,16 @@ function readWishlist() {
   }
 }
 
+function readInitialQuery() {
+  return new URLSearchParams(window.location.search).get('q') || '';
+}
+
+function readIsDark() {
+  const set = document.documentElement.getAttribute('data-theme');
+  if (set) return set === 'dark';
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
 function checkIsAdminRoute() {
   if (typeof window === 'undefined') return false;
   return window.location.hash === '#admin' || new URLSearchParams(window.location.search).has('admin');
@@ -34,7 +44,8 @@ export default function App() {
   const { t, localize } = useLang();
   const [products, setProducts] = useState(getPublicCatalog);
   const [category, setCategory] = useState('all');
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(readInitialQuery);
+  const [isDark, setIsDark] = useState(readIsDark);
   const [sort, setSort] = useState('featured');
   const [wishlist, setWishlist] = useState(readWishlist);
   const [active, setActive] = useState(() => findProductByLocation(getPublicCatalog()));
@@ -95,6 +106,13 @@ export default function App() {
   }, [category, products, query, sort, localize]);
 
   const savedProducts = products.filter((product) => wishlist.includes(product.id));
+
+  const related = useMemo(() => {
+    if (!active) return [];
+    const sameCat = products.filter((p) => p.id !== active.id && p.cat === active.cat);
+    const others = products.filter((p) => p.id !== active.id && p.cat !== active.cat);
+    return [...sameCat, ...others].slice(0, 4);
+  }, [active, products]);
 
   useEffect(() => {
     localStorage.setItem(WISH_KEY, JSON.stringify(wishlist));
@@ -256,13 +274,10 @@ export default function App() {
   }
 
   function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme');
-    let next = 'dark';
-    if (current === 'dark') next = 'light';
-    else if (current === 'light') next = 'dark';
-    else next = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark';
+    const next = isDark ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem(THEME_KEY, next);
+    setIsDark(!isDark);
   }
 
   function resetFilters() {
@@ -296,8 +311,8 @@ export default function App() {
         onFilter={filterCategory}
         wishlistCount={wishlist.length}
         onOpenWishlist={() => setDrawerOpen(true)}
+        isDark={isDark}
         onToggleTheme={toggleTheme}
-        onOpenAdmin={openAdmin}
       />
       <main>
         <Hero total={products.length} />
@@ -324,6 +339,8 @@ export default function App() {
       <Footer onFilter={filterCategory} onOpenAdmin={openAdmin} />
       <ProductModal
         product={active}
+        related={related}
+        onOpen={openProduct}
         fabric={fabric}
         chaise={chaise}
         saved={active ? wishlist.includes(active.id) : false}
@@ -336,6 +353,7 @@ export default function App() {
         open={drawerOpen}
         products={savedProducts}
         onClose={() => setDrawerOpen(false)}
+        onOpen={openProduct}
         onToggle={toggleWish}
       />
       <a
@@ -345,7 +363,6 @@ export default function App() {
         rel="noopener noreferrer"
         title={t('floatWa')}
       >
-        <div className="pulse-dot" />
         <WaIcon size={20} />
         <span>{t('floatCta')}</span>
       </a>
@@ -356,10 +373,7 @@ export default function App() {
         type="button"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-          <line x1="12" y1="19" x2="12" y2="5" />
-          <polyline points="5 12 12 5 19 12" />
-        </svg>
+        <ArrowUpIcon size={18} />
       </button>
     </>
   );
