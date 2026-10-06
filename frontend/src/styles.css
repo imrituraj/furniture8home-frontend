@@ -854,8 +854,50 @@ html[lang="as"] .faq-q { font-family: 'Noto Serif Bengali', var(--font-serif); f
 .checkout-done-icon { width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; font-size: 28px; font-weight: 700; background: var(--brand-sage-light); color: var(--brand-sage); }
 .checkout-done-body h2 { font-size: 30px; }
 .checkout-done-body > p { color: var(--ink-secondary); max-width: 400px; }
-.checkout-order-id { display: flex; flex-direction: column; gap: 2px; padding: 14px 24px; border-radius: var(--radius-md); background: var(--surface-subtle); font-size: 13px; color: var(--ink-muted); }
-.checkout-order-id strong { font-size: 20px; letter-spacing: 0.04em; color: var(--ink); }
+.order-pass {
+  position: relative;
+  width: min(320px, 100%);
+  margin: 4px 0 2px;
+  padding: 18px 18px 16px;
+  border-radius: 24px;
+  background:
+    radial-gradient(120% 70% at 85% 0%, rgba(226, 180, 134, 0.28), transparent 60%),
+    linear-gradient(160deg, #2f3d33 0%, #1b231d 100%);
+  color: #f3eee6;
+  box-shadow: 0 24px 50px -22px rgba(20, 26, 21, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  text-align: center;
+  transform: rotate(-1.2deg);
+  transition: transform 0.4s var(--ease);
+  animation: passIn 0.6s var(--ease) both;
+}
+.order-pass:hover { transform: rotate(0deg) translateY(-2px); }
+.order-pass-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+.order-pass-brand { font-family: var(--font-serif); font-size: 18px; letter-spacing: -0.01em; }
+.order-pass-brand em { color: #e2b486; }
+.order-pass-kind { font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b9c2b1; }
+.order-pass-qr { background: #fff; border-radius: 18px; padding: 10px; aspect-ratio: 1; }
+.order-pass-qr svg { display: block; width: 100%; height: 100%; }
+.order-pass-meta { display: flex; flex-direction: column; gap: 2px; margin-top: 14px; }
+.order-pass-label { font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b9c2b1; }
+.order-pass-id { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 21px; font-weight: 600; letter-spacing: 0.02em; }
+.order-pass-total { font-family: var(--font-serif); font-size: 18px; color: #e2b486; }
+.order-pass-hint { display: flex; flex-direction: column; gap: 2px; margin: 12px 0 0; font-size: 12.5px; line-height: 1.45; color: #b9c2b1; }
+.order-pass-hint span:first-child { color: #f3eee6; font-weight: 600; }
+.order-pass-save {
+  margin-top: 14px;
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.1);
+  color: #f3eee6;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background-color 0.2s var(--ease);
+}
+.order-pass-save:hover { background: rgba(255, 255, 255, 0.18); }
+@keyframes passIn { from { opacity: 0; transform: translateY(16px) rotate(-4deg) scale(0.96); } to { opacity: 1; transform: rotate(-1.2deg); } }
+@media (prefers-reduced-motion: reduce) { .order-pass { transform: none; } }
+
 .checkout-done-actions { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 6px; }
 
 @media (max-width: 768px) {

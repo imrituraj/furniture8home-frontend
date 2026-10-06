@@ -50,13 +50,23 @@ function paymentPillClass(status) {
   return 'pill-pending';
 }
 
-export default function OrdersDashboard({ nav, onExit, onLogout }) {
+export default function OrdersDashboard({ nav, onExit, onLogout, openOrderId = null }) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('open');
   const [methodFilter, setMethodFilter] = useState('all');
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState(openOrderId);
+
+  // A scanned order QR code (#order/<id>) opens that order, whatever the list filters are
+  useEffect(() => {
+    if (openOrderId) setSelectedId(openOrderId);
+  }, [openOrderId]);
+
+  function closeOrder() {
+    setSelectedId(null);
+    if (window.location.hash.startsWith('#order/')) window.history.replaceState(null, '', '#orders');
+  }
   const [toast, setToast] = useState(null);
   const toastTimerRef = useRef(null);
 
@@ -122,6 +132,13 @@ export default function OrdersDashboard({ nav, onExit, onLogout }) {
   }, [orders, query, statusFilter, methodFilter]);
 
   const selected = orders.find((o) => o.id === selectedId) || null;
+
+  useEffect(() => {
+    if (!loading && selectedId && !selected) {
+      showToast(`Order ${selectedId} was not found`, 'warning');
+      closeOrder();
+    }
+  }, [loading, selectedId, selected]);
 
   return (
     <div className="admin-wrapper">
@@ -313,7 +330,7 @@ export default function OrdersDashboard({ nav, onExit, onLogout }) {
       {selected && (
         <OrderDetail
           order={selected}
-          onClose={() => setSelectedId(null)}
+          onClose={closeOrder}
           onUpdate={(updates, message) => handleUpdate(selected, updates, message)}
         />
       )}
