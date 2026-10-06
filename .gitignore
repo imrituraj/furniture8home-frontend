@@ -3,3 +3,11 @@
 __pycache__/
 node_modules/
 dist/
+.env
+# Live catalog written by the backend at runtime
+backend/data/catalog.json
+backend/data/catalog.json.tmp
+backend/data/categories.json
+backend/data/categories.json.tmp
+backend/data/orders.json
+backend/data/orders.json.tmp
