@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import OrderPass from './OrderPass.jsx';
 import { CloseIcon, WaIcon } from './Icons.jsx';
 import { lineOptionsLabel } from './CartDrawer.jsx';
 import { useLang } from '../i18n/LanguageContext.jsx';
@@ -192,11 +193,7 @@ export default function Checkout({ open, lines, total, onClose, onComplete }) {
             <span className="checkout-done-icon" aria-hidden="true">✓</span>
             <h2 id="orderDoneTitle">{t('orderPlacedTitle', { name: details.name.trim().split(' ')[0] })}</h2>
             <p>{message}</p>
-            <div className="checkout-order-id">
-              <span>{t('orderNumber')}</span>
-              <strong>{order.id}</strong>
-              <span>{order.totalLabel}</span>
-            </div>
+            <OrderPass order={order} />
             <div className="checkout-done-actions">
               <a href={waLink(waMessage)} target="_blank" rel="noopener noreferrer" className="btn-wa btn-lg btn-block">
                 <WaIcon size={18} /> {t('sendOnWhatsapp')}

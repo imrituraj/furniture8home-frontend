@@ -17,14 +17,24 @@ function readView() {
   return VIEWS.some((v) => v.key === hash) ? hash : 'orders';
 }
 
+// Order QR codes link to #order/<id>: open that order straight away
+function readOrderLink() {
+  const match = /^#order\/(.+)$/.exec(window.location.hash);
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
 export default function App() {
   const [authed, setAuthed] = useState(isAuthenticated);
   const [view, setView] = useState(readView);
+  const [orderLink, setOrderLink] = useState(readOrderLink);
 
   useEffect(() => onSessionExpired(() => setAuthed(false)), []);
 
   useEffect(() => {
-    const onHash = () => setView(readView());
+    const onHash = () => {
+      setView(readView());
+      setOrderLink(readOrderLink());
+    };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
@@ -50,5 +60,5 @@ export default function App() {
   const props = { nav, onExit: openStore, onLogout: () => setAuthed(false) };
   if (view === 'catalog') return <AdminDashboard {...props} />;
   if (view === 'categories') return <CategoriesDashboard {...props} />;
-  return <OrdersDashboard {...props} />;
+  return <OrdersDashboard {...props} openOrderId={orderLink} />;
 }
