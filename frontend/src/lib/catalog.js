@@ -1,10 +1,12 @@
 import bundledProducts from '../data/products.json';
 
-// Same-origin by default (Vite proxies /api to the backend in dev); set VITE_API_URL when the API lives elsewhere.
+// The backend (Cloudflare Worker) URL, e.g. https://furniture8home-backend.<you>.workers.dev.
+// Empty means same-origin, which is what `npm run dev` uses (Vite proxies /api to the local Worker).
 export const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
 
-// Admin dashboard (served by the backend) — linked from the footer's staff login
-export const ADMIN_URL = import.meta.env.VITE_ADMIN_URL || 'http://localhost:4000';
+// Admin dashboard, served at the backend's root — linked from the footer's staff login.
+// The link is hidden until the backend URL is known.
+export const ADMIN_URL = import.meta.env.VITE_ADMIN_URL || (API_URL ? `${API_URL}/` : '');
 
 /**
  * Catalog shipped with the build, shown immediately and used if the API is unreachable.

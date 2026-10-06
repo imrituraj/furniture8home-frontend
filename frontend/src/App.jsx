@@ -334,7 +334,7 @@ export default function App() {
         <Showrooms />
         <FAQSection />
       </main>
-      <Footer onFilter={filterCategory} onOpenAdmin={openAdmin} />
+      <Footer onFilter={filterCategory} onOpenAdmin={ADMIN_URL ? openAdmin : undefined} />
       <ProductModal
         product={active}
         related={related}
