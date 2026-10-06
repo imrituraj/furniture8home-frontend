@@ -7,27 +7,66 @@
   "routes": [
     {
       "src": "/admin(?:/.*)?",
-      "has": [{ "type": "host", "value": "(www\\.)?furniture8home\\.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?furniture8home\\.com"
+        }
+      ],
       "status": 307,
-      "headers": { "Location": "https://admin.furniture8home.com/" }
+      "headers": {
+        "Location": "https://admin.furniture8home.com/"
+      }
     },
     {
       "src": "/.*",
-      "has": [{ "type": "host", "value": "admin.furniture8home.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "(www\\.)?furniture8home\\.com"
+        }
+      ],
       "headers": {
-        "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https: data: blob:; connect-src 'self' https://*.workers.dev https://*.furniture8home.com; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
+        "X-Frame-Options": "DENY",
+        "Content-Security-Policy": "frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'self' https://api.razorpay.com",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+        "Strict-Transport-Security": "max-age=63072000; includeSubDomains"
+      },
+      "continue": true
+    },
+    {
+      "src": "/.*",
+      "has": [
+        {
+          "type": "host",
+          "value": "admin.furniture8home.com"
+        }
+      ],
+      "headers": {
+        "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https: data: blob:; connect-src 'self' https://furniture8home-backend.ritur-dev.workers.dev https://*.furniture8home.com; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
         "X-Frame-Options": "DENY",
         "X-Content-Type-Options": "nosniff",
         "Referrer-Policy": "strict-origin-when-cross-origin",
-        "X-Robots-Tag": "noindex, nofollow"
+        "X-Robots-Tag": "noindex, nofollow",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
+        "Cross-Origin-Opener-Policy": "same-origin"
       },
       "continue": true
     },
     {
       "src": "/(?!admin/|images/).*",
-      "has": [{ "type": "host", "value": "admin.furniture8home.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "admin.furniture8home.com"
+        }
+      ],
       "dest": "/admin/index.html"
     },
-    { "handle": "filesystem" }
+    {
+      "handle": "filesystem"
+    }
   ]
 }
