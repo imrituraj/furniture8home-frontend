@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { CHAISE_OPTIONS, FABRICS } from '../data/content.js';
-import { CloseIcon, HeartIcon, PhoneIcon, StarIcon, WaIcon } from './Icons.jsx';
+import { CartIcon, CloseIcon, HeartIcon, PhoneIcon, StarIcon, WaIcon } from './Icons.jsx';
 import ShareButton from './ShareButton.jsx';
-import { CAT_TITLE } from './Catalog.jsx';
 import { TEL_LINK, waLink } from '../lib/whatsapp.js';
 import { useLang } from '../i18n/LanguageContext.jsx';
+import { useCategories } from '../lib/categories.jsx';
 
-const FABRIC_KEY = {
+export const FABRIC_KEY = {
   'Royal Navy': 'fabricNavy',
   'Charcoal Grey': 'fabricCharcoal',
   'Forest Sage': 'fabricSage',
@@ -14,14 +14,15 @@ const FABRIC_KEY = {
   'Mustard Gold': 'fabricMustard',
 };
 
-const CHAISE_KEY = {
+export const CHAISE_KEY = {
   'Right Facing Chaise': 'chaiseRight',
   'Left Facing Chaise': 'chaiseLeft',
   'Custom Measurement': 'chaiseCustom',
 };
 
-export default function ProductModal({ product, related = [], fabric, chaise, saved, onClose, onOpen, onFabric, onChaise, onToggleWish }) {
+export default function ProductModal({ product, related = [], fabric, chaise, saved, onClose, onOpen, onFabric, onChaise, onToggleWish, onAddToCart, onBuyNow }) {
   const { t, localize } = useLang();
+  const categories = useCategories();
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -31,11 +32,12 @@ export default function ProductModal({ product, related = [], fabric, chaise, sa
   if (!product) return null;
 
   const item = localize(product);
+  const offersChaise = categories.offersChaise(product.cat);
   const isStockOut = product.inStock === false;
   const fabricLabel = t(FABRIC_KEY[fabric] || 'fabricNavy');
   const chaiseLabel = t(CHAISE_KEY[chaise] || 'chaiseRight');
   const specs = [`${t('fabricTitle')}: ${fabricLabel}`];
-  if (product.cat === 'Sectionals') specs.push(`${t('chaiseTitle')}: ${chaiseLabel}`);
+  if (offersChaise) specs.push(`${t('chaiseTitle')}: ${chaiseLabel}`);
 
   const orderText = isStockOut
     ? t('waStockOutOrder', { name: item.name, price: product.price, specs: specs.join(', ') })
@@ -54,7 +56,7 @@ export default function ProductModal({ product, related = [], fabric, chaise, sa
           </div>
 
           <div className="modal-info">
-            <div className="modal-crumbs">{t('sku', { cat: t(CAT_TITLE[product.cat] || 'catAccent'), id: product.id })}</div>
+            <div className="modal-crumbs">{t('sku', { cat: categories.label(product.cat), id: product.id })}</div>
             {isStockOut && <div className="modal-stockout">{t('stockOutBanner')}</div>}
             <h2 className="modal-title">{item.name}</h2>
             <div className="modal-rating">
@@ -78,7 +80,7 @@ export default function ProductModal({ product, related = [], fabric, chaise, sa
               </div>
             </div>
 
-            {product.cat === 'Sectionals' && (
+            {offersChaise && (
               <div className="option-group">
                 <div className="option-title">{t('chaiseTitle')} <span>{chaiseLabel}</span></div>
                 <div className="swatches">
@@ -99,8 +101,19 @@ export default function ProductModal({ product, related = [], fabric, chaise, sa
             </dl>
 
             <div className="modal-actions">
-              <a href={waLink(orderText)} target="_blank" rel="noopener noreferrer" className="btn-wa btn-lg btn-block">
-                <WaIcon size={20} />
+              {!isStockOut && (
+                <div className="modal-buy-row">
+                  <button type="button" className="btn-primary btn-lg" onClick={() => onBuyNow(product)}>
+                    {t('buyNow')}
+                  </button>
+                  <button type="button" className="btn-secondary btn-lg" onClick={() => onAddToCart(product)}>
+                    <CartIcon size={18} />
+                    {t('addToCart')}
+                  </button>
+                </div>
+              )}
+              <a href={waLink(orderText)} target="_blank" rel="noopener noreferrer" className={`btn-wa btn-block${isStockOut ? ' btn-lg' : ''}`}>
+                <WaIcon size={isStockOut ? 20 : 18} />
                 <span>{isStockOut ? t('enquireRestock') : t('enquireOrder')}</span>
               </a>
               <div className="modal-action-row">

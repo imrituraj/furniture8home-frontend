@@ -15,6 +15,7 @@ import {
 } from './Icons.jsx';
 import { TEL_LINK, waLink } from '../lib/whatsapp.js';
 import { useLang } from '../i18n/LanguageContext.jsx';
+import { useCategories } from '../lib/categories.jsx';
 
 const FEATURES = [
   { icon: TimberIcon, title: 'feat1t', body: 'feat1' },
@@ -39,14 +40,6 @@ const REVIEW_KEYS = [
 const STORE_COPY = [
   { kicker: 'store1', name: 'store1name', address: 'store1addr', wa: 'waMaligaon' },
   { kicker: 'store2', name: 'store2name', address: 'store2addr', wa: 'waBoragaon' },
-];
-
-const FOOT_LINKS = [
-  ['Sectionals', 'footSec'],
-  ['Wooden Sofas', 'footWood'],
-  ['Accent', 'footAccent'],
-  ['Dining', 'footDining'],
-  ['Wingback', 'footWing'],
 ];
 
 // Step labels read "Step 1 · Measurements"; keep only the part after the dot.
@@ -235,6 +228,7 @@ export function FAQSection() {
 
 export function Footer({ onFilter, onOpenAdmin }) {
   const { t } = useLang();
+  const categories = useCategories();
   return (
     <footer className="site-footer">
       <div className="wrap foot-cta">
@@ -257,8 +251,8 @@ export function Footer({ onFilter, onOpenAdmin }) {
         <div className="foot-col">
           <h4>{t('footBrowse')}</h4>
           <ul>
-            {FOOT_LINKS.map(([id, key]) => (
-              <li key={id}><a href="#catalog" onClick={(e) => { e.preventDefault(); onFilter(id); }}>{t(key)}</a></li>
+            {categories.list.map((c) => (
+              <li key={c.id}><a href="#catalog" onClick={(e) => { e.preventDefault(); onFilter(c.id); }}>{categories.label(c.id)}</a></li>
             ))}
           </ul>
         </div>

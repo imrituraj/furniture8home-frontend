@@ -12,23 +12,6 @@ export const CHAISE_OPTIONS = [
   'Custom Measurement',
 ];
 
-export const CATEGORIES = [
-  { id: 'Sectionals', title: 'L-Sectionals', count: '15 Master Models', img: 'images/lsofa/0e06df108cba5f38f4c09e7d95643405.jpg', alt: 'L-Shaped Sectional Sofas' },
-  { id: 'Wooden Sofas', title: 'Wooden Sofas', count: '11 Teak Designs', img: 'images/woodensofa/2223b117512a2b4decec1a5c0d5163e2.jpg', alt: 'Solid Wooden Sofas' },
-  { id: 'Accent', title: 'Accent Chairs', count: '11 Statement Pieces', img: 'images/singlechair/5d54248074aaac490842264668b74d3d.jpg', alt: 'Accent and lounge chairs' },
-  { id: 'Dining', title: 'Dining Chairs', count: '7 Pairs & Sets', img: 'images/chairs/B612_20221205_111922_652.jpg', alt: 'Dining chairs' },
-  { id: 'Wingback', title: 'Wingbacks', count: '5 Luxury Sets', img: 'images/original_site/prod_5_meadow_floral_wingback_ottoman.jpeg', alt: 'Wingbacks and ottomans' },
-];
-
-export const FILTERS = [
-  { id: 'all', label: 'All Collections' },
-  { id: 'Sectionals', label: 'L-Sectionals' },
-  { id: 'Wooden Sofas', label: 'Wooden Sofas' },
-  { id: 'Accent', label: 'Accent Chairs' },
-  { id: 'Dining', label: 'Dining Chairs' },
-  { id: 'Wingback', label: 'Wingbacks & Ottomans' },
-];
-
 export const FEATURES = [
   { title: 'Seasoned Assam Timber', text: 'Every frame is crafted from chemically treated, kiln-seasoned Assam Teak or Indian Sheesham, 100% immune to termites and humidity distortion.' },
   { title: 'High-Density 40D Foam', text: 'We use commercial-grade 40D high-resilience foam layered over anti-sag pocket coil springs, guaranteed to maintain its rebound for 10+ years.' },

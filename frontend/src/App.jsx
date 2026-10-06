@@ -1,17 +1,19 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Header from './components/Header.jsx';
 import Hero from './components/Hero.jsx';
 import Catalog from './components/Catalog.jsx';
 import ProductModal from './components/ProductModal.jsx';
 import WishlistDrawer from './components/WishlistDrawer.jsx';
-import AdminDashboard from './components/AdminDashboard.jsx';
-import AdminLogin from './components/AdminLogin.jsx';
+import CartDrawer from './components/CartDrawer.jsx';
+import Checkout from './components/Checkout.jsx';
 import { Bespoke, FAQSection, Footer, Reviews, Showrooms, WhyUs } from './components/SiteSections.jsx';
 import { ArrowUpIcon, WaIcon } from './components/Icons.jsx';
 import { waLink } from './lib/whatsapp.js';
 import { clearProductUrl, findProductByLocation, writeProductUrl } from './lib/productLink.js';
 import { useLang } from './i18n/LanguageContext.jsx';
-import { getPublicCatalog, isAdminAuthenticated } from './lib/catalogStorage.js';
+import { useCategories } from './lib/categories.jsx';
+import { ADMIN_URL, fallbackCatalog, fetchCatalog } from './lib/catalog.js';
+import { MAX_QTY, addToCart, readCart, resolveCart, writeCart } from './lib/cart.js';
 
 const WISH_KEY = 'f8h_wishlist';
 const THEME_KEY = 'f8h_theme';
@@ -35,43 +37,42 @@ function readIsDark() {
   return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
-function checkIsAdminRoute() {
-  if (typeof window === 'undefined') return false;
-  return window.location.hash === '#admin' || new URLSearchParams(window.location.search).has('admin');
-}
-
 export default function App() {
   const { t, localize } = useLang();
-  const [products, setProducts] = useState(getPublicCatalog);
+  const categories = useCategories();
+  const [products, setProducts] = useState(fallbackCatalog);
   const [category, setCategory] = useState('all');
   const [query, setQuery] = useState(readInitialQuery);
   const [isDark, setIsDark] = useState(readIsDark);
   const [sort, setSort] = useState('featured');
   const [wishlist, setWishlist] = useState(readWishlist);
-  const [active, setActive] = useState(() => findProductByLocation(getPublicCatalog()));
+  const [active, setActive] = useState(() => findProductByLocation(fallbackCatalog));
   const [fabric, setFabric] = useState('Royal Navy');
   const [chaise, setChaise] = useState('Right Facing Chaise');
   const [menuOpen, setMenuOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [cart, setCart] = useState(readCart);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [showTop, setShowTop] = useState(false);
 
-  // Admin routing & authentication state
-  const [isAdminView, setIsAdminView] = useState(checkIsAdminRoute);
-  const [isAuthenticated, setIsAuthenticated] = useState(isAdminAuthenticated);
+  const productsRef = useRef(products);
+  productsRef.current = products;
 
-  // Sync products when catalogStorage updates
+  // Replace the bundled catalog with the live one managed from the admin dashboard
   useEffect(() => {
-    function onCatalogChange() {
-      const publicList = getPublicCatalog();
-      setProducts(publicList);
-      // Update active modal if it was edited
-      setActive((prev) => {
-        if (!prev) return null;
-        return publicList.find((p) => p.id === prev.id) || null;
-      });
-    }
-    window.addEventListener('f8h_catalog_changed', onCatalogChange);
-    return () => window.removeEventListener('f8h_catalog_changed', onCatalogChange);
+    let cancelled = false;
+    fetchCatalog()
+      .then((list) => {
+        if (cancelled || !Array.isArray(list)) return;
+        setProducts(list);
+        // Re-resolve the open product against the live data (it may have been edited or hidden)
+        setActive((prev) => (prev ? list.find((p) => p.id === prev.id) || null : findProductByLocation(list)));
+      })
+      .catch((err) => console.warn('Using bundled catalog:', err.message));
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const visible = useMemo(() => {
@@ -114,16 +115,25 @@ export default function App() {
     return [...sameCat, ...others].slice(0, 4);
   }, [active, products]);
 
+  const cartLines = useMemo(() => resolveCart(cart, products), [cart, products]);
+  const cartTotal = cartLines.reduce((sum, line) => sum + line.product.priceNum * line.qty, 0);
+  const cartCount = cartLines.reduce((sum, line) => sum + line.qty, 0);
+  const canCheckout = cartLines.length > 0 && cartLines.every((line) => line.available);
+
   useEffect(() => {
     localStorage.setItem(WISH_KEY, JSON.stringify(wishlist));
   }, [wishlist]);
 
   useEffect(() => {
-    document.body.style.overflow = active || drawerOpen ? 'hidden' : '';
+    writeCart(cart);
+  }, [cart]);
+
+  useEffect(() => {
+    document.body.style.overflow = active || drawerOpen || cartOpen || checkoutOpen ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
-  }, [active, drawerOpen]);
+  }, [active, drawerOpen, cartOpen, checkoutOpen]);
 
   const closeProduct = useCallback(() => {
     setActive(null);
@@ -137,16 +147,31 @@ export default function App() {
     writeProductUrl(product.slug, { replace });
   }, []);
 
-  const openAdmin = useCallback(() => {
-    setIsAdminView(true);
-    window.location.hash = 'admin';
-  }, []);
+  function cartOptions(product) {
+    return { fabric, chaise: categories.offersChaise(product.cat) ? chaise : '' };
+  }
 
-  const exitAdmin = useCallback(() => {
-    setIsAdminView(false);
-    if (window.location.hash === '#admin') {
-      window.history.pushState(null, '', window.location.pathname + (window.location.search ? window.location.search : ''));
-    }
+  function handleAddToCart(product) {
+    setCart((current) => addToCart(current, product, cartOptions(product)));
+    setCartOpen(true);
+  }
+
+  function handleBuyNow(product) {
+    setCart((current) => addToCart(current, product, cartOptions(product)));
+    closeProduct();
+    setCheckoutOpen(true);
+  }
+
+  function setCartQty(key, qty) {
+    setCart((current) => current.map((line) => (line.key === key ? { ...line, qty: Math.min(MAX_QTY, Math.max(1, qty)) } : line)));
+  }
+
+  function removeFromCart(key) {
+    setCart((current) => current.filter((line) => line.key !== key));
+  }
+
+  const openAdmin = useCallback(() => {
+    window.location.href = ADMIN_URL;
   }, []);
 
   useEffect(() => {
@@ -155,18 +180,12 @@ export default function App() {
       if (event.key === 'Escape') {
         closeProduct();
         setDrawerOpen(false);
+        setCartOpen(false);
         setMenuOpen(false);
-      }
-      // Alt + A shortcut to toggle Admin
-      if (event.altKey && (event.key === 'a' || event.key === 'A')) {
-        event.preventDefault();
-        setIsAdminView((prev) => !prev);
       }
     };
     const onPop = () => {
-      const isNowAdmin = checkIsAdminRoute();
-      setIsAdminView(isNowAdmin);
-      const product = findProductByLocation(getPublicCatalog());
+      const product = findProductByLocation(productsRef.current);
       setActive(product);
       if (product) {
         setFabric('Royal Navy');
@@ -176,21 +195,14 @@ export default function App() {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('keydown', onKey);
     window.addEventListener('popstate', onPop);
-    window.addEventListener('hashchange', onPop);
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('keydown', onKey);
       window.removeEventListener('popstate', onPop);
-      window.removeEventListener('hashchange', onPop);
     };
   }, [closeProduct]);
 
   useEffect(() => {
-    if (isAdminView) {
-      document.title = 'Catalog & Storefront Admin — Furniture8home';
-      return;
-    }
-
     const defaultTitle = 'Furniture8home — Solid Teak Sofas, L-Sectionals & Custom Furniture Guwahati';
     const defaultDesc = 'Guwahati\'s premier furniture workshop & showrooms in Maligaon and Paschim Boragaon. Handcrafted seasoned Assam teak sofas, custom-sized L-sectionals, dining sets & accent chairs. WhatsApp: 60025 84075.';
 
@@ -261,7 +273,7 @@ export default function App() {
       const existingScript = document.getElementById('product-schema-jsonld');
       if (existingScript) existingScript.remove();
     }
-  }, [active, isAdminView, localize]);
+  }, [active, localize]);
 
   function filterCategory(next) {
     setCategory(next);
@@ -286,22 +298,6 @@ export default function App() {
     setSort('featured');
   }
 
-  // If in Admin view, render Admin Dashboard or Login prompt
-  if (isAdminView) {
-    if (!isAuthenticated) {
-      return <AdminLogin onLoginSuccess={() => setIsAuthenticated(true)} onCancel={exitAdmin} />;
-    }
-    return (
-      <AdminDashboard
-        onExit={exitAdmin}
-        onOpenProduct={(p) => {
-          exitAdmin();
-          openProduct(p);
-        }}
-      />
-    );
-  }
-
   return (
     <>
       <Header
@@ -311,6 +307,8 @@ export default function App() {
         onFilter={filterCategory}
         wishlistCount={wishlist.length}
         onOpenWishlist={() => setDrawerOpen(true)}
+        cartCount={cartCount}
+        onOpenCart={() => setCartOpen(true)}
         isDark={isDark}
         onToggleTheme={toggleTheme}
       />
@@ -336,7 +334,7 @@ export default function App() {
         <Showrooms />
         <FAQSection />
       </main>
-      <Footer onFilter={filterCategory} onOpenAdmin={openAdmin} />
+      <Footer onFilter={filterCategory} onOpenAdmin={ADMIN_URL ? openAdmin : undefined} />
       <ProductModal
         product={active}
         related={related}
@@ -348,6 +346,8 @@ export default function App() {
         onFabric={setFabric}
         onChaise={setChaise}
         onToggleWish={toggleWish}
+        onAddToCart={handleAddToCart}
+        onBuyNow={handleBuyNow}
       />
       <WishlistDrawer
         open={drawerOpen}
@@ -355,6 +355,27 @@ export default function App() {
         onClose={() => setDrawerOpen(false)}
         onOpen={openProduct}
         onToggle={toggleWish}
+      />
+      <CartDrawer
+        open={cartOpen}
+        lines={cartLines}
+        total={cartTotal}
+        canCheckout={canCheckout}
+        onClose={() => setCartOpen(false)}
+        onOpen={openProduct}
+        onQty={setCartQty}
+        onRemove={removeFromCart}
+        onCheckout={() => {
+          setCartOpen(false);
+          setCheckoutOpen(true);
+        }}
+      />
+      <Checkout
+        open={checkoutOpen}
+        lines={cartLines}
+        total={cartTotal}
+        onClose={() => setCheckoutOpen(false)}
+        onComplete={() => setCart([])}
       />
       <a
         className="floating-wa-btn"

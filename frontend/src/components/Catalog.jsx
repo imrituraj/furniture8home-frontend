@@ -1,31 +1,15 @@
 import { useEffect, useState } from 'react';
-import { CATEGORIES, FILTERS } from '../data/content.js';
 import { ArrowIcon, HeartIcon, SearchIcon, StarIcon, WaIcon } from './Icons.jsx';
 import ShareButton from './ShareButton.jsx';
 import { waLink } from '../lib/whatsapp.js';
 import { useLang } from '../i18n/LanguageContext.jsx';
-
-export const CAT_TITLE = {
-  Sectionals: 'catSectionals',
-  'Wooden Sofas': 'catWooden',
-  Accent: 'catAccent',
-  Dining: 'catDining',
-  Wingback: 'catWing',
-};
-
-const FILTER_KEY = {
-  all: 'allCollections',
-  Sectionals: 'filterSectionals',
-  'Wooden Sofas': 'filterWooden',
-  Accent: 'filterAccent',
-  Dining: 'filterDining',
-  Wingback: 'filterWing',
-};
+import { useCategories } from '../lib/categories.jsx';
 
 const PAGE_SIZE = 12;
 
 export function ProductCard({ product, saved, onOpen, onToggleWish }) {
   const { t, localize } = useLang();
+  const categories = useCategories();
   const item = localize(product);
   const isStockOut = product.inStock === false;
   const waMessage = isStockOut
@@ -56,7 +40,7 @@ export function ProductCard({ product, saved, onOpen, onToggleWish }) {
       </div>
       <div className="card-body">
         <div className="card-meta">
-          <span>{t(CAT_TITLE[product.cat] || 'catAccent')}</span>
+          <span>{categories.label(product.cat)}</span>
           <span className="card-rating"><StarIcon size={12} /> {product.rating || '4.9'} <span>({product.reviews || 20})</span></span>
         </div>
         <h3 className="card-title">
@@ -102,6 +86,7 @@ export default function Catalog({
   onToggleWish,
 }) {
   const { t } = useLang();
+  const categories = useCategories();
   const [limit, setLimit] = useState(PAGE_SIZE);
 
   useEffect(() => {
@@ -109,6 +94,9 @@ export default function Catalog({
   }, [category, query, sort]);
 
   const countFor = (id) => (id === 'all' ? products.length : products.filter((p) => p.cat === id).length);
+  // Only show categories that have something to browse
+  const tiles = categories.list.filter((cat) => countFor(cat.id) > 0);
+  const filters = [{ id: 'all', label: t('allCollections') }, ...tiles.map((cat) => ({ id: cat.id, label: categories.label(cat.id) }))];
   const shown = visible.slice(0, limit);
   const remaining = visible.length - shown.length;
 
@@ -123,11 +111,11 @@ export default function Catalog({
           <p className="section-desc">{t('exploreDesc')}</p>
         </div>
         <div className="cat-grid">
-          {CATEGORIES.map((cat) => (
+          {tiles.map((cat) => (
             <button key={cat.id} type="button" className={`cat-tile${category === cat.id ? ' active' : ''}`} onClick={() => onFilter(cat.id)}>
               <img src={cat.img} alt="" loading="lazy" />
               <span className="cat-tile-body">
-                <span className="cat-tile-title">{t(CAT_TITLE[cat.id])}</span>
+                <span className="cat-tile-title">{categories.label(cat.id)}</span>
                 <span className="cat-tile-count">
                   {t('pieces', { n: countFor(cat.id) })}
                   <ArrowIcon size={15} />
@@ -170,9 +158,9 @@ export default function Catalog({
             </div>
           </div>
           <div className="chips" role="group" aria-label={t('allCollections')}>
-            {FILTERS.map((filter) => (
+            {filters.map((filter) => (
               <button key={filter.id} type="button" className={`chip${category === filter.id ? ' active' : ''}`} aria-pressed={category === filter.id} onClick={() => onFilter(filter.id)}>
-                {t(FILTER_KEY[filter.id])} <span className="chip-count">{countFor(filter.id)}</span>
+                {filter.label} <span className="chip-count">{countFor(filter.id)}</span>
               </button>
             ))}
           </div>

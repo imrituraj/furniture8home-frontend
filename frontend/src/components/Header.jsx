@@ -1,24 +1,10 @@
-import { ChairIcon, CloseIcon, HeartIcon, MenuIcon, MoonIcon, PhoneIcon, SunIcon, WaIcon } from './Icons.jsx';
+import { CartIcon, ChairIcon, CloseIcon, HeartIcon, MenuIcon, MoonIcon, PhoneIcon, SunIcon, WaIcon } from './Icons.jsx';
 import { waLink, TEL_LINK } from '../lib/whatsapp.js';
 import { useLang } from '../i18n/LanguageContext.jsx';
+import { useCategories } from '../lib/categories.jsx';
 
-const NAV = [
-  { key: 'navCollection', cat: 'all' },
-  { key: 'navSectionals', cat: 'Sectionals' },
-  { key: 'navWooden', cat: 'Wooden Sofas' },
-  { key: 'navCustom', href: '#bespoke' },
-  { key: 'navShowrooms', href: '#showrooms' },
-];
-
-const MOBILE_NAV = [
-  { key: 'mobAll', cat: 'all' },
-  { key: 'mobSectionals', cat: 'Sectionals' },
-  { key: 'mobWooden', cat: 'Wooden Sofas' },
-  { key: 'mobAccent', cat: 'Accent' },
-  { key: 'mobDining', cat: 'Dining' },
-  { key: 'mobCustom', href: '#bespoke' },
-  { key: 'mobShowrooms', href: '#showrooms' },
-];
+// The desktop bar has room for the first few categories; the mobile menu lists them all
+const DESKTOP_CATEGORY_LINKS = 2;
 
 export default function Header({
   menuOpen,
@@ -27,20 +13,36 @@ export default function Header({
   onFilter,
   wishlistCount,
   onOpenWishlist,
+  cartCount,
+  onOpenCart,
   isDark,
   onToggleTheme,
 }) {
   const { lang, t, toggleLang } = useLang();
+  const categories = useCategories();
+  const catLinks = categories.list.map((c) => ({ key: c.id, label: categories.label(c.id), cat: c.id }));
+  const nav = [
+    { key: 'all', label: t('navCollection'), cat: 'all' },
+    ...catLinks.slice(0, DESKTOP_CATEGORY_LINKS),
+    { key: 'custom', label: t('navCustom'), href: '#bespoke' },
+    { key: 'showrooms', label: t('navShowrooms'), href: '#showrooms' },
+  ];
+  const mobileNav = [
+    { key: 'all', label: t('mobAll'), cat: 'all' },
+    ...catLinks,
+    { key: 'custom', label: t('mobCustom'), href: '#bespoke' },
+    { key: 'showrooms', label: t('mobShowrooms'), href: '#showrooms' },
+  ];
 
   function navLink(item, className) {
     if (item.cat) {
       return (
         <a key={item.key} className={className} href="#catalog" onClick={(e) => { e.preventDefault(); onFilter(item.cat); }}>
-          {t(item.key)}
+          {item.label}
         </a>
       );
     }
-    return <a key={item.key} className={className} href={item.href} onClick={onCloseMenu}>{t(item.key)}</a>;
+    return <a key={item.key} className={className} href={item.href} onClick={onCloseMenu}>{item.label}</a>;
   }
 
   return (
@@ -72,7 +74,7 @@ export default function Header({
           </a>
 
           <nav className="nav-links" aria-label="Primary">
-            {NAV.map((item) => navLink(item))}
+            {nav.map((item) => navLink(item))}
           </nav>
 
           <div className="nav-actions">
@@ -82,6 +84,10 @@ export default function Header({
             <button className="icon-btn" type="button" title={t('wishlist')} aria-label={t('wishlist')} onClick={onOpenWishlist}>
               <HeartIcon size={18} />
               {wishlistCount > 0 && <span className="badge-count">{wishlistCount}</span>}
+            </button>
+            <button className="icon-btn" type="button" title={t('cart')} aria-label={t('cart')} onClick={onOpenCart}>
+              <CartIcon />
+              {cartCount > 0 && <span className="badge-count">{cartCount}</span>}
             </button>
             <a className="btn-wa-header" href={waLink(t('waVisit'))} target="_blank" rel="noopener noreferrer">
               <WaIcon />
@@ -95,7 +101,7 @@ export default function Header({
 
         <nav className={`mobile-nav${menuOpen ? ' open' : ''}`} id="mobileNav" aria-label="Mobile">
           <div className="wrap mobile-nav-inner">
-            {MOBILE_NAV.map((item) => navLink(item, 'mobile-nav-link'))}
+            {mobileNav.map((item) => navLink(item, 'mobile-nav-link'))}
             <div className="mobile-nav-cta">
               <a className="btn-primary" href={waLink(t('waGeneral'))} target="_blank" rel="noopener noreferrer">
                 <WaIcon size={16} /> {t('whatsappNumber')}
