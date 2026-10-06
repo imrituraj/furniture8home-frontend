@@ -4,9 +4,9 @@ import bundledProducts from '../data/products.json';
 // Empty means same-origin, which is what `npm run dev` uses (Vite proxies /api to the local Worker).
 export const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
 
-// Admin dashboard, served at the backend's root — linked from the footer's staff login.
-// The link is hidden until the backend URL is known.
-export const ADMIN_URL = import.meta.env.VITE_ADMIN_URL || (API_URL ? `${API_URL}/` : '');
+// Admin dashboard (built from admin/ into this deployment) — linked from the footer's staff login
+export const ADMIN_URL =
+  import.meta.env.VITE_ADMIN_URL || (import.meta.env.DEV ? 'http://localhost:5174/admin/' : 'https://admin.furniture8home.com/');
 
 /**
  * Catalog shipped with the build, shown immediately and used if the API is unreachable.
