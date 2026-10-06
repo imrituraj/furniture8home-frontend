@@ -12,7 +12,7 @@ Storefront for **Furniture8home**, with showrooms in Maligaon and Paschim Boraga
 
 | Repo | What it is | Hosted on |
 | --- | --- | --- |
-| [furniture8home.com](https://github.com/imrituraj/furniture8home.com) (this repo) | The public storefront (React + Vite, in `frontend/`) | Vercel |
+| [furniture8home-frontend](https://github.com/imrituraj/furniture8home-frontend) (this repo) | The public storefront (React + Vite, in `frontend/`) | Vercel |
 | [furniture8home-backend](https://github.com/imrituraj/furniture8home-backend) | Shop API, D1 database, Razorpay, and the admin dashboard | Cloudflare Workers |
 
 The storefront loads products and categories from the backend (`GET /api/products`, `GET /api/categories`). If the backend can't be reached it falls back to the copies bundled in `frontend/src/data/`, so the catalog still shows. Checkout, orders and payments always go through the backend.
