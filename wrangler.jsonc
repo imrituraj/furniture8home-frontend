@@ -1,0 +1,10 @@
+// Cloudflare Workers Builds deploys the static storefront from frontend/dist.
+// The Node backend (admin + API) is hosted separately.
+{
+  "name": "furniture8home-com",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./frontend/dist",
+    "not_found_handling": "single-page-application"
+  }
+}

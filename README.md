@@ -56,8 +56,11 @@ The admin PIN defaults to `8888`. See `backend/.env.example` for all settings (a
 ## Build & deploy
 
 ```bash
-npm run build
+npm run build       # storefront only (what Vercel / Cloudflare deploy)
+npm run build:all   # storefront + admin dashboard
 ```
+
+At the repo root, `npm install` also installs the storefront's dependencies, so hosts that run install-then-build from the root work without extra settings. `vercel.json` and `wrangler.jsonc` point both hosts at `frontend/dist`.
 
 - `frontend/dist/` is the static storefront. Set `VITE_API_URL` (where the backend lives) and `VITE_ADMIN_URL` (for the footer's staff login link) at build time if the backend is on a different domain.
 - `backend/dist/` is the admin dashboard. Run `ADMIN_PIN=… npm start --prefix backend` to serve it together with the API. In production the server refuses to start unless `ADMIN_PIN` is 6–8 digits. Serve it over HTTPS, and set `TRUST_PROXY=1` when it sits behind a reverse proxy so login and order rate limits see real visitor IPs.
