@@ -13,7 +13,7 @@ import {
   TruckIcon,
   WaIcon,
 } from './Icons.jsx';
-import { TEL_LINK, waLink } from '../lib/whatsapp.js';
+import { TEL_LINK, waLink, SHOP_EMAIL } from '../lib/whatsapp.js';
 import { useLang } from '../i18n/LanguageContext.jsx';
 import { useCategories } from '../lib/categories.jsx';
 
@@ -268,6 +268,7 @@ export function Footer({ onFilter, onOpenAdmin }) {
           <h4>{t('footOrder')}</h4>
           <p>{t('footOrderBody')}</p>
           <p className="foot-wa">{t('footWaLabel')}</p>
+          <p className="foot-wa"><a href={`mailto:${SHOP_EMAIL}`}>{SHOP_EMAIL}</a></p>
         </div>
       </div>
       <div className="wrap foot-bottom">
