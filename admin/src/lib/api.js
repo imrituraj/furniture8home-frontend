@@ -36,8 +36,8 @@ async function request(method, path, body) {
   return res.status === 204 ? null : res.json();
 }
 
-export async function login(pin) {
-  const { token } = await request('POST', '/admin/login', { pin });
+export async function login(email, pin) {
+  const { token } = await request('POST', '/admin/login', { email, pin });
   sessionStorage.setItem(TOKEN_KEY, token);
 }
 

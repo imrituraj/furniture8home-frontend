@@ -2,22 +2,47 @@ import { useState } from 'react';
 import { login } from '../lib/api.js';
 import { ChairIcon, CloseIcon } from './Icons.jsx';
 
+const EMAIL_KEY = 'f8h_admin_email';
+
+// Remember the admin email on this device, so staff usually only type the passcode
+function readSavedEmail() {
+  try {
+    return localStorage.getItem(EMAIL_KEY) || '';
+  } catch {
+    return '';
+  }
+}
+
+function saveEmail(email) {
+  try {
+    localStorage.setItem(EMAIL_KEY, email);
+  } catch {
+    // Storage blocked: they'll type it next time
+  }
+}
+
 export default function AdminLogin({ onLoginSuccess, onCancel }) {
+  const [email, setEmail] = useState(readSavedEmail);
   const [pin, setPin] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setError('Please enter the admin email address');
+      return;
+    }
     if (!pin.trim()) {
-      setError('Please enter your admin PIN');
+      setError('Please enter your passcode');
       return;
     }
 
     setSubmitting(true);
-    login(pin)
+    login(email.trim(), pin)
       .then(() => {
         setError('');
+        saveEmail(email.trim());
         onLoginSuccess();
       })
       .catch((err) => {
@@ -51,9 +76,22 @@ export default function AdminLogin({ onLoginSuccess, onCancel }) {
           <ChairIcon />
         </div>
         <h2 id="adminLoginTitle" className="admin-login-title">Admin Access</h2>
-        <p className="admin-login-sub">Enter your security PIN to manage products, pricing, stock, and catalog items.</p>
+        <p className="admin-login-sub">Sign in with the admin email and passcode to manage orders, products and categories.</p>
 
         <form onSubmit={handleSubmit} className="admin-login-form">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setError('');
+            }}
+            placeholder="Admin email"
+            autoComplete="username"
+            autoFocus={!email}
+            className={`admin-email-input${error ? ' has-error' : ''}`}
+            aria-label="Admin email"
+          />
           <div className="admin-pin-display">
             <input
               type="password"
@@ -62,11 +100,13 @@ export default function AdminLogin({ onLoginSuccess, onCancel }) {
                 setPin(e.target.value.replace(/[^0-9]/g, ''));
                 setError('');
               }}
-              placeholder="••••"
+              placeholder="Passcode"
               maxLength={8}
-              autoFocus
+              autoFocus={Boolean(email)}
+              autoComplete="current-password"
+              inputMode="numeric"
               className={`admin-pin-input${error ? ' has-error' : ''}`}
-              aria-label="Admin PIN"
+              aria-label="Passcode"
             />
           </div>
 

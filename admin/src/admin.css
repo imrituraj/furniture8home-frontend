@@ -1165,8 +1165,33 @@
   margin-bottom: 20px;
 }
 
+.admin-email-input {
+  width: 100%;
+  height: 48px;
+  margin-bottom: 10px;
+  padding: 0 16px;
+  font-size: 15px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--line);
+  background: var(--surface-subtle);
+  color: var(--ink);
+  outline: none;
+}
+.admin-email-input:focus {
+  border-color: var(--brand-sage);
+  box-shadow: 0 0 0 4px rgba(56, 72, 50, 0.12);
+}
+.admin-email-input.has-error {
+  border-color: #b91c1c;
+}
+
 .admin-pin-display {
   margin-bottom: 12px;
+}
+.admin-pin-input::placeholder {
+  font-size: 15px;
+  letter-spacing: normal;
+  font-weight: 500;
 }
 
 .admin-pin-input {
