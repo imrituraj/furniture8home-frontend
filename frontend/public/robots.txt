@@ -3,6 +3,7 @@
 
 User-agent: *
 Allow: /
+Disallow: /admin/
 Disallow: /#admin
 Disallow: /*?admin*
 Disallow: /*&admin*
@@ -15,6 +16,7 @@ User-agent: Googlebot
 Allow: /
 Allow: /images/
 Allow: /images/*
+Disallow: /admin/
 Disallow: /#admin
 
 # Image Crawlers
