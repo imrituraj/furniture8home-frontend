@@ -898,6 +898,41 @@ function ProductFormModal({ product, categories, isCreating, onClose, onSave }) 
   const [inStock, setInStock] = useState(product?.inStock !== false);
   const [hidden, setHidden] = useState(Boolean(product?.hidden));
   const [img, setImg] = useState(product?.img || PRESET_IMAGES[0].url);
+  // Extra photos for the product's gallery (up to 8; the main photo is `img`)
+  const [images, setImages] = useState(Array.isArray(product?.images) ? product.images : []);
+  const [galleryBusy, setGalleryBusy] = useState(false);
+
+  async function addGalleryPhotos(e) {
+    const files = [...(e.target.files || [])];
+    e.target.value = '';
+    if (!files.length) return;
+    setGalleryBusy(true);
+    try {
+      const resized = [];
+      for (const file of files) resized.push(await readResizedImage(file));
+      setImages((current) => [...current, ...resized].slice(0, 8));
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setGalleryBusy(false);
+    }
+  }
+
+  function moveGalleryPhoto(index, delta) {
+    setImages((current) => {
+      const next = [...current];
+      const target = index + delta;
+      if (target < 0 || target >= next.length) return current;
+      [next[index], next[target]] = [next[target], next[index]];
+      return next;
+    });
+  }
+
+  // Swap a gallery photo with the main photo
+  function makeMainPhoto(index) {
+    setImages((current) => current.map((src, i) => (i === index ? img : src)));
+    setImg(images[index]);
+  }
   const [desc, setDesc] = useState(product?.desc || '');
   const [dims, setDims] = useState(product?.dims || '');
   const [material, setMaterial] = useState(product?.material || '');
@@ -957,6 +992,7 @@ function ProductFormModal({ product, categories, isCreating, onClose, onSave }) 
       inStock,
       hidden,
       img: img.trim(),
+      images,
       desc: desc.trim(),
       dims: dims.trim(),
       material: material.trim(),
@@ -1195,7 +1231,7 @@ function ProductFormModal({ product, categories, isCreating, onClose, onSave }) 
                   </div>
 
                   <div className="admin-media-preview-box">
-                    <label>Live Image Preview</label>
+                    <label>Main photo</label>
                     <div className="admin-preview-frame">
                       {img ? (
                         <img src={assetUrl(img)} alt="Product preview" />
@@ -1204,6 +1240,30 @@ function ProductFormModal({ product, categories, isCreating, onClose, onSave }) 
                       )}
                     </div>
                   </div>
+                </div>
+
+                <div className="admin-form-group admin-gallery-edit">
+                  <label>More photos ({images.length}/8): shown as a swipeable gallery on the product page</label>
+                  <div className="admin-gallery-grid">
+                    {images.map((src, i) => (
+                      <div key={`${i}-${src.slice(-24)}`} className="admin-gallery-item">
+                        <img src={assetUrl(src)} alt={`Gallery photo ${i + 1}`} />
+                        <div className="admin-gallery-actions">
+                          <button type="button" onClick={() => moveGalleryPhoto(i, -1)} disabled={i === 0} aria-label="Move earlier">←</button>
+                          <button type="button" onClick={() => makeMainPhoto(i)} title="Use as main photo" aria-label="Use as main photo">★</button>
+                          <button type="button" onClick={() => moveGalleryPhoto(i, 1)} disabled={i === images.length - 1} aria-label="Move later">→</button>
+                          <button type="button" onClick={() => setImages((cur) => cur.filter((_, j) => j !== i))} aria-label="Remove photo">✕</button>
+                        </div>
+                      </div>
+                    ))}
+                    {images.length < 8 && (
+                      <label className="admin-gallery-add">
+                        <input type="file" accept="image/*" multiple onChange={addGalleryPhotos} disabled={galleryBusy} />
+                        <span>{galleryBusy ? 'Preparing…' : '+ Add photos'}</span>
+                      </label>
+                    )}
+                  </div>
+                  <span className="admin-help-text">Photos are resized automatically. ★ makes a photo the main one.</span>
                 </div>
               </div>
             )}

@@ -141,7 +141,7 @@ export function Reviews() {
   );
 }
 
-export function Showrooms() {
+export function Showrooms({ onBook }) {
   const { t } = useLang();
   return (
     <section className="showrooms wrap" id="showrooms" aria-labelledby="visitTitle">
@@ -168,7 +168,10 @@ export function Showrooms() {
                   <li><ClockIcon size={16} /> {t('hours')}</li>
                 </ul>
                 <div className="store-actions">
-                  <a className="btn-primary" href={store.directions} target="_blank" rel="noopener noreferrer">
+                  <button type="button" className="btn-primary" onClick={() => onBook?.(store.name)}>
+                    <ClockIcon size={15} /> {t('visitBookButton')}
+                  </button>
+                  <a className="btn-secondary" href={store.directions} target="_blank" rel="noopener noreferrer">
                     {t('directions')} <ArrowIcon size={15} />
                   </a>
                   <a className="btn-secondary" href={waLink(t(copy.wa))} target="_blank" rel="noopener noreferrer">
@@ -227,7 +230,7 @@ export function FAQSection() {
   );
 }
 
-export function Footer({ onFilter, onOpenAdmin }) {
+export function Footer({ onFilter, onOpenAdmin, onTrack, onBook }) {
   const { t } = useLang();
   const categories = useCategories();
   return (
@@ -271,6 +274,10 @@ export function Footer({ onFilter, onOpenAdmin }) {
         <div className="foot-col">
           <h4>{t('footOrder')}</h4>
           <p>{t('footOrderBody')}</p>
+          <ul className="foot-actions">
+            <li><button type="button" onClick={onTrack}>{t('trackTitle')}</button></li>
+            <li><button type="button" onClick={onBook}>{t('visitModalTitle')}</button></li>
+          </ul>
           <p className="foot-wa">{t('footWaLabel')}</p>
           <p className="foot-wa"><a href={`mailto:${SHOP_EMAIL}`}>{SHOP_EMAIL}</a></p>
         </div>

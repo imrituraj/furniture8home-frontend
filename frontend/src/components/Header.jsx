@@ -17,6 +17,7 @@ export default function Header({
   onOpenCart,
   isDark,
   onToggleTheme,
+  onTrack,
 }) {
   const { lang, t, toggleLang } = useLang();
   const categories = useCategories();
@@ -32,9 +33,13 @@ export default function Header({
     ...catLinks,
     { key: 'custom', label: t('mobCustom'), href: '#bespoke' },
     { key: 'showrooms', label: t('mobShowrooms'), href: '#showrooms' },
+    { key: 'track', label: t('trackTitle'), action: onTrack },
   ];
 
   function navLink(item, className) {
+    if (item.action) {
+      return <button key={item.key} type="button" className={className} onClick={item.action}>{item.label}</button>;
+    }
     if (item.cat) {
       return (
         <a key={item.key} className={className} href="#catalog" onClick={(e) => { e.preventDefault(); onFilter(item.cat); }}>
@@ -51,6 +56,7 @@ export default function Header({
         <div className="wrap announce-inner">
           <span className="announce-text">{t('announce')}</span>
           <div className="announce-right">
+            <button type="button" className="announce-link announce-track" onClick={onTrack}>{t('trackShort')}</button>
             <a href={TEL_LINK} className="announce-link">
               <PhoneIcon size={13} />
               <span>60025 84075</span>

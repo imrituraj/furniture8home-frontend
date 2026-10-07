@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { fetchOrders, formatPrice, logout, updateOrder } from '../lib/api.js';
 import { assetUrl } from '../lib/storefront.js';
+import { downloadOrdersCsv } from '../lib/exportOrders.js';
 import { LogoMark, CloseIcon, WaIcon } from './Icons.jsx';
 
 const REFRESH_MS = 30_000;
@@ -168,6 +169,15 @@ export default function OrdersDashboard({ nav, onExit, onLogout, openOrderId = n
             {nav}
             <button type="button" className="admin-btn admin-btn-secondary" onClick={() => refresh()}>
               <span>Refresh</span>
+            </button>
+            <button
+              type="button"
+              className="admin-btn admin-btn-secondary"
+              disabled={filtered.length === 0}
+              title="Download the orders shown below as a spreadsheet"
+              onClick={() => downloadOrdersCsv(filtered, `furniture8home-orders-${new Date().toISOString().slice(0, 10)}.csv`)}
+            >
+              <span>Export to Excel ({filtered.length})</span>
             </button>
             <button type="button" className="admin-btn admin-btn-ghost" onClick={onExit} title="Exit Admin and View Store">
               <span>← View Store</span>
@@ -378,6 +388,12 @@ function OrderDetail({ order, onClose, onUpdate }) {
               </div>
             </li>
           ))}
+          {order.discount && (
+            <li className="admin-order-total admin-order-discount">
+              <span>Discount ({order.discount.code}, {order.discount.label})</span>
+              <strong>−{formatPrice(order.discount.amount)}</strong>
+            </li>
+          )}
           <li className="admin-order-total">
             <span>Total</span>
             <strong>{order.totalLabel}</strong>

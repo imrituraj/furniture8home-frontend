@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { ArrowIcon, HeartIcon, SearchIcon, StarIcon, WaIcon } from './Icons.jsx';
+import { ArrowIcon, HeartIcon, SearchIcon, StarIcon, WaIcon, RulerIcon } from './Icons.jsx';
 import ShareButton from './ShareButton.jsx';
 import { waLink } from '../lib/whatsapp.js';
 import { useLang } from '../i18n/LanguageContext.jsx';
+import { FitBadge, RoomFitForm } from './RoomFit.jsx';
 import { useCategories } from '../lib/categories.jsx';
 
 const PAGE_SIZE = 12;
 
-export function ProductCard({ product, saved, onOpen, onToggleWish }) {
+export function ProductCard({ product, saved, onOpen, onToggleWish, room }) {
   const { t, localize } = useLang();
   const categories = useCategories();
   const item = localize(product);
@@ -24,6 +25,7 @@ export function ProductCard({ product, saved, onOpen, onToggleWish }) {
           <span className="card-view">{t('quickView')}</span>
         </button>
         <div className="card-badges">
+          <FitBadge product={product} room={room} />
           {isStockOut && <span className="card-badge card-badge--out">{t('stockOut')}</span>}
           {item.badge && <span className="card-badge">{item.badge}</span>}
         </div>
@@ -84,8 +86,13 @@ export default function Catalog({
   onReset,
   onOpen,
   onToggleWish,
+  room,
+  onRoom,
+  fitOnly,
+  onFitOnly,
 }) {
   const { t } = useLang();
+  const [fitOpen, setFitOpen] = useState(Boolean(room));
   const categories = useCategories();
   const [limit, setLimit] = useState(PAGE_SIZE);
 
@@ -146,6 +153,9 @@ export default function Catalog({
                 <button className="search-clear" title={t('clearSearch')} aria-label={t('clearSearch')} type="button" onClick={() => onQuery('')}>×</button>
               )}
             </label>
+            <button type="button" className={`fit-toggle${fitOpen ? ' active' : ''}${room ? ' has-room' : ''}`} aria-expanded={fitOpen} onClick={() => setFitOpen((v) => !v)}>
+              <RulerIcon size={16} /> <span>{t('fitButton')}</span>
+            </button>
             <div className="sort-box">
               <label htmlFor="sortSelect">{t('sortBy')}</label>
               <select id="sortSelect" value={sort} onChange={(e) => onSort(e.target.value)}>
@@ -157,6 +167,12 @@ export default function Catalog({
               </select>
             </div>
           </div>
+          {fitOpen && (
+            <div className="fit-panel">
+              <p className="fit-panel-intro">{t('fitIntro')}</p>
+              <RoomFitForm room={room} onChange={onRoom} fitOnly={fitOnly} onFitOnly={onFitOnly} />
+            </div>
+          )}
           <div className="chips" role="group" aria-label={t('allCollections')}>
             {filters.map((filter) => (
               <button key={filter.id} type="button" className={`chip${category === filter.id ? ' active' : ''}`} aria-pressed={category === filter.id} onClick={() => onFilter(filter.id)}>
@@ -182,6 +198,7 @@ export default function Catalog({
                   saved={wishlist.includes(product.id)}
                   onOpen={onOpen}
                   onToggleWish={onToggleWish}
+                  room={room}
                 />
               ))}
             </div>

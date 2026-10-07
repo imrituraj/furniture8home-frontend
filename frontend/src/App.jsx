@@ -6,6 +6,8 @@ import ProductModal from './components/ProductModal.jsx';
 import WishlistDrawer from './components/WishlistDrawer.jsx';
 import CartDrawer from './components/CartDrawer.jsx';
 import Checkout from './components/Checkout.jsx';
+import TrackOrder from './components/TrackOrder.jsx';
+import BookVisit from './components/BookVisit.jsx';
 import { Bespoke, FAQSection, Footer, Reviews, Showrooms, WhyUs } from './components/SiteSections.jsx';
 import { ArrowUpIcon, WaIcon } from './components/Icons.jsx';
 import { waLink } from './lib/whatsapp.js';
@@ -14,6 +16,12 @@ import { useLang } from './i18n/LanguageContext.jsx';
 import { useCategories } from './lib/categories.jsx';
 import { ADMIN_URL, fallbackCatalog, fetchCatalog } from './lib/catalog.js';
 import { MAX_QTY, addToCart, readCart, resolveCart, writeCart } from './lib/cart.js';
+import { fitFor, readRoom, saveRoom } from './lib/fit.js';
+
+// Emails link to the tracking page as ?track=<order number>
+function readTrackParam() {
+  return new URLSearchParams(window.location.search).get('track') || '';
+}
 
 const WISH_KEY = 'f8h_wishlist';
 const THEME_KEY = 'f8h_theme';
@@ -55,6 +63,11 @@ export default function App() {
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [showTop, setShowTop] = useState(false);
+  const [room, setRoom] = useState(readRoom);
+  const [fitOnly, setFitOnly] = useState(false);
+  const [trackId, setTrackId] = useState(readTrackParam);
+  const [trackOpen, setTrackOpen] = useState(() => Boolean(readTrackParam()));
+  const [visit, setVisit] = useState(null); // showroom name while the booking window is open
 
   const productsRef = useRef(products);
   productsRef.current = products;
@@ -80,6 +93,8 @@ export default function App() {
     return products
       .filter((product) => {
         const matchCat = category === 'all' || product.cat === category;
+        // "Only show what fits": hide pieces that are too big for the customer's room
+        if (fitOnly && room && fitFor(product, room) === 'no') return false;
         if (!q) return matchCat;
         const item = localize(product);
         const haystack = [
@@ -104,7 +119,7 @@ export default function App() {
         if (sort === 'name-asc') return localize(a).name.localeCompare(localize(b).name, 'as');
         return a.id - b.id;
       });
-  }, [category, products, query, sort, localize]);
+  }, [category, products, query, sort, localize, fitOnly, room]);
 
   const savedProducts = products.filter((product) => wishlist.includes(product.id));
 
@@ -281,6 +296,24 @@ export default function App() {
     document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
   }
 
+  function updateRoom(next) {
+    setRoom(next);
+    saveRoom(next);
+    if (!next) setFitOnly(false);
+  }
+
+  const closeTrack = useCallback(() => {
+    setTrackOpen(false);
+    setTrackId('');
+    // Drop ?track= so a refresh doesn't reopen it
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('track')) {
+      params.delete('track');
+      const search = params.toString();
+      window.history.replaceState(null, '', `${window.location.pathname}${search ? `?${search}` : ''}${window.location.hash}`);
+    }
+  }, []);
+
   function toggleWish(id) {
     setWishlist((current) => (current.includes(id) ? current.filter((item) => item !== id) : [...current, id]));
   }
@@ -311,6 +344,7 @@ export default function App() {
         onOpenCart={() => setCartOpen(true)}
         isDark={isDark}
         onToggleTheme={toggleTheme}
+        onTrack={() => { setMenuOpen(false); setTrackOpen(true); }}
       />
       <main>
         <Hero total={products.length} />
@@ -327,14 +361,18 @@ export default function App() {
           onReset={resetFilters}
           onOpen={openProduct}
           onToggleWish={toggleWish}
+          room={room}
+          onRoom={updateRoom}
+          fitOnly={fitOnly}
+          onFitOnly={setFitOnly}
         />
         <Bespoke />
         <WhyUs />
         <Reviews />
-        <Showrooms />
+        <Showrooms onBook={setVisit} />
         <FAQSection />
       </main>
-      <Footer onFilter={filterCategory} onOpenAdmin={openAdmin} />
+      <Footer onFilter={filterCategory} onOpenAdmin={openAdmin} onTrack={() => setTrackOpen(true)} onBook={() => setVisit('Maligaon')} />
       <ProductModal
         product={active}
         related={related}
@@ -348,7 +386,11 @@ export default function App() {
         onToggleWish={toggleWish}
         onAddToCart={handleAddToCart}
         onBuyNow={handleBuyNow}
+        room={room}
+        onRoom={updateRoom}
       />
+      <TrackOrder open={trackOpen} initialOrderId={trackId} onClose={closeTrack} />
+      <BookVisit open={Boolean(visit)} initialShowroom={visit || 'Maligaon'} onClose={() => setVisit(null)} />
       <WishlistDrawer
         open={drawerOpen}
         products={savedProducts}

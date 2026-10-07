@@ -4,7 +4,7 @@ import { CloseIcon, WaIcon } from './Icons.jsx';
 import { lineOptionsLabel } from './CartDrawer.jsx';
 import { useLang } from '../i18n/LanguageContext.jsx';
 import { formatRupees } from '../lib/cart.js';
-import { fetchStoreConfig, loadRazorpay, placeOrder, reportPaymentFailed, verifyPayment } from '../lib/orders.js';
+import { checkCoupon, fetchStoreConfig, loadRazorpay, placeOrder, reportPaymentFailed, verifyPayment } from '../lib/orders.js';
 import { waLink } from '../lib/whatsapp.js';
 
 const DETAILS_KEY = 'f8h_checkout_details';
@@ -43,6 +43,10 @@ export default function Checkout({ open, lines, total, onClose, onComplete }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [placed, setPlaced] = useState(null); // { order, waMessage }
+  const [couponInput, setCouponInput] = useState('');
+  const [coupon, setCoupon] = useState(null); // { code, amount, label } once applied
+  const [couponError, setCouponError] = useState('');
+  const [couponBusy, setCouponBusy] = useState(false);
   const pendingRef = useRef(null); // reuse an unpaid Razorpay order when the customer retries
 
   useEffect(() => {
@@ -56,6 +60,38 @@ export default function Checkout({ open, lines, total, onClose, onComplete }) {
       })
       .catch(() => setRazorpayAvailable(false));
   }, [open]);
+
+  const itemsPayload = lines.map((line) => ({ id: line.id, qty: line.qty, options: { fabric: line.fabric, chaise: line.chaise } }));
+  const cartKey = JSON.stringify(itemsPayload);
+
+  // Re-check an applied code when the cart changes (the minimum order or amount may change)
+  useEffect(() => {
+    if (!open || !coupon) return;
+    checkCoupon(coupon.code, itemsPayload)
+      .then((result) => setCoupon(result))
+      .catch((err) => {
+        setCoupon(null);
+        setCouponError(err.message);
+      });
+  }, [cartKey, open]);
+
+  async function applyCoupon() {
+    const code = couponInput.trim();
+    if (!code) return;
+    setCouponBusy(true);
+    setCouponError('');
+    try {
+      setCoupon(await checkCoupon(code, itemsPayload));
+      setCouponInput('');
+    } catch (err) {
+      setCoupon(null);
+      setCouponError(err.message);
+    } finally {
+      setCouponBusy(false);
+    }
+  }
+
+  const payable = Math.max(0, total - (coupon?.amount || 0));
 
   useEffect(() => {
     if (!open) return undefined;
@@ -154,10 +190,11 @@ export default function Checkout({ open, lines, total, onClose, onComplete }) {
     setBusy(true);
 
     const payload = {
-      items: lines.map((line) => ({ id: line.id, qty: line.qty, options: { fabric: line.fabric, chaise: line.chaise } })),
+      items: itemsPayload,
       customer: details,
       fulfilment: { type: fulfilment, showroom },
       paymentMethod: method,
+      ...(coupon ? { couponCode: coupon.code } : {}),
     };
 
     try {
@@ -210,7 +247,7 @@ export default function Checkout({ open, lines, total, onClose, onComplete }) {
   const submitLabel = busy
     ? t('placing')
     : method === 'razorpay'
-      ? t('placeOrderPay', { total: formatRupees(total) })
+      ? t('placeOrderPay', { total: formatRupees(payable) })
       : method === 'whatsapp'
         ? t('placeOrderWa')
         : t('placeOrder');
@@ -342,9 +379,48 @@ export default function Checkout({ open, lines, total, onClose, onComplete }) {
                 );
               })}
             </ul>
+            <div className="coupon">
+              {coupon ? (
+                <div className="coupon-applied">
+                  <span>
+                    <strong>{coupon.code}</strong> · {coupon.label}
+                  </span>
+                  <button type="button" onClick={() => setCoupon(null)}>{t('couponRemove')}</button>
+                </div>
+              ) : (
+                <div className="coupon-row">
+                  <input
+                    value={couponInput}
+                    onChange={(e) => { setCouponInput(e.target.value.toUpperCase()); setCouponError(''); }}
+                    onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); applyCoupon(); } }}
+                    placeholder={t('couponPlaceholder')}
+                    aria-label={t('couponPlaceholder')}
+                    maxLength={20}
+                    autoCapitalize="characters"
+                    spellCheck={false}
+                  />
+                  <button type="button" className="btn-secondary" onClick={applyCoupon} disabled={couponBusy || !couponInput.trim()}>
+                    {couponBusy ? '…' : t('couponApply')}
+                  </button>
+                </div>
+              )}
+              {couponError && <p className="coupon-error" role="alert">{couponError}</p>}
+            </div>
+            {coupon && (
+              <>
+                <div className="drawer-total checkout-sub">
+                  <span>{t('couponSubtotal')}</span>
+                  <span>{formatRupees(total)}</span>
+                </div>
+                <div className="drawer-total checkout-discount">
+                  <span>{t('couponDiscount', { code: coupon.code })}</span>
+                  <span>−{formatRupees(coupon.amount)}</span>
+                </div>
+              </>
+            )}
             <div className="drawer-total">
               <span>{t('subtotal')}</span>
-              <strong>{formatRupees(total)}</strong>
+              <strong>{formatRupees(payable)}</strong>
             </div>
             <p className="checkout-hint">{t('gst')}</p>
 
