@@ -10,7 +10,7 @@ import {
 } from '../lib/api.js';
 import { assetUrl } from '../lib/storefront.js';
 import { readResizedImage } from '../lib/images.js';
-import { ChairIcon, CloseIcon } from './Icons.jsx';
+import { LogoMark, CloseIcon } from './Icons.jsx';
 
 export default function CategoriesDashboard({ nav, onExit, onLogout }) {
   const [categories, setCategories] = useState([]);
@@ -100,7 +100,7 @@ export default function CategoriesDashboard({ nav, onExit, onLogout }) {
         <div className="admin-nav-inner wrap">
           <div className="admin-brand">
             <div className="admin-brand-icon">
-              <ChairIcon />
+              <LogoMark />
             </div>
             <div>
               <div className="admin-brand-title">

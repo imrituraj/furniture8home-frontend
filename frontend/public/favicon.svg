@@ -1,4 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#384832"/>
-  <text x="32" y="42" text-anchor="middle" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#F7D794">8</text>
+  <title>Furniture8home</title>
+  <rect width="64" height="64" rx="15" fill="#26312A"/>
+  <g fill="none" stroke="#E2B486" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="20" y="11" width="24" height="19" rx="8.5"/>
+    <rect x="14" y="30" width="36" height="18" rx="8.5"/>
+    <path d="M21 48v5M43 48v5"/>
+  </g>
 </svg>

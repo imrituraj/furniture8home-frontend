@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { LogoMark } from './Icons.jsx';
 import { finderOrigins, orderQrLink, qrMatrix } from '../lib/qr.js';
 import { useLang } from '../i18n/LanguageContext.jsx';
 
@@ -109,7 +110,7 @@ export default function OrderPass({ order }) {
   return (
     <div className="order-pass">
       <div className="order-pass-top">
-        <span className="order-pass-brand">Furniture<em>8</em>home</span>
+        <span className="order-pass-brand"><LogoMark size={18} /> Furniture<em>8</em>home</span>
         <span className="order-pass-kind">{t('passTitle')}</span>
       </div>
       <div className="order-pass-qr">

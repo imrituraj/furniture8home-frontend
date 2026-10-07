@@ -36,14 +36,6 @@ export function ShareIcon({ size = 16 }) {
   );
 }
 
-export function ChairIcon() {
-  return (
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M6 19v2M18 19v2M5 11h14a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1Z" />
-      <path d="M7 11V6a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v5" />
-    </svg>
-  );
-}
 
 export function CloseIcon({ size = 20 }) {
   return (
@@ -132,4 +124,18 @@ export function RulerIcon(props) {
 
 export function ShieldIcon(props) {
   return <Line {...props}><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z" /><path d="m9 12 2 2 4-4" /></Line>;
+}
+
+/**
+ * The Furniture8home mark: an "8" made of an armchair's backrest and seat, on teak legs.
+ * Strokes only (currentColor); place it on the brand tile.
+ */
+export function LogoMark({ size = 24, strokeWidth = 4.5 }) {
+  return (
+    <svg width={size} height={size} viewBox="8 7 48 50" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="20" y="11" width="24" height="19" rx="8.5" />
+      <rect x="14" y="30" width="36" height="18" rx="8.5" />
+      <path d="M21 48v5M43 48v5" />
+    </svg>
+  );
 }

@@ -267,7 +267,7 @@ export default function App() {
       document.querySelector('meta[name="description"]')?.setAttribute('content', defaultDesc);
       document.querySelector('meta[property="og:title"]')?.setAttribute('content', defaultTitle);
       document.querySelector('meta[property="og:description"]')?.setAttribute('content', defaultDesc);
-      document.querySelector('meta[property="og:image"]')?.setAttribute('content', 'https://furniture8home.com/images/original_site/hero.jpeg');
+      document.querySelector('meta[property="og:image"]')?.setAttribute('content', 'https://furniture8home.com/og-image.jpg');
       document.querySelector('meta[property="og:url"]')?.setAttribute('content', 'https://furniture8home.com/');
 
       const existingScript = document.getElementById('product-schema-jsonld');

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { fetchOrders, formatPrice, logout, updateOrder } from '../lib/api.js';
 import { assetUrl } from '../lib/storefront.js';
-import { ChairIcon, CloseIcon, WaIcon } from './Icons.jsx';
+import { LogoMark, CloseIcon, WaIcon } from './Icons.jsx';
 
 const REFRESH_MS = 30_000;
 
@@ -153,7 +153,7 @@ export default function OrdersDashboard({ nav, onExit, onLogout, openOrderId = n
         <div className="admin-nav-inner wrap">
           <div className="admin-brand">
             <div className="admin-brand-icon">
-              <ChairIcon />
+              <LogoMark />
             </div>
             <div>
               <div className="admin-brand-title">
