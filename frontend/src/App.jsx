@@ -66,7 +66,8 @@ export default function App() {
   const [room, setRoom] = useState(readRoom);
   const [fitOnly, setFitOnly] = useState(false);
   const [trackId, setTrackId] = useState(readTrackParam);
-  const [trackOpen, setTrackOpen] = useState(() => Boolean(readTrackParam()));
+  // ?track (even without an order number, e.g. from the Shipping page) opens the tracking window
+  const [trackOpen, setTrackOpen] = useState(() => new URLSearchParams(window.location.search).has('track'));
   const [visit, setVisit] = useState(null); // showroom name while the booking window is open
 
   const productsRef = useRef(products);
@@ -270,12 +271,9 @@ export default function App() {
             '@type': 'Organization',
             name: 'Furniture8home',
           },
-        },
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: String(item.rating || 4.9),
-          reviewCount: item.reviews || 20,
-        },
+        }
+        // No aggregateRating: Google only allows ratings from genuine customer reviews,
+        // and the catalog's star ratings aren't collected from customers yet.
       });
     } else {
       document.title = defaultTitle;
