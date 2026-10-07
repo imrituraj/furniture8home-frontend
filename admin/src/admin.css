@@ -1165,11 +1165,23 @@
   margin-bottom: 20px;
 }
 
-.admin-email-input {
+.admin-login-field {
+  display: block;
+  margin-bottom: 14px;
+  text-align: left;
+}
+.admin-login-field > span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+}
+.admin-login-input {
   width: 100%;
   height: 48px;
-  margin-bottom: 10px;
-  padding: 0 16px;
+  padding: 0 14px;
+  font: inherit;
   font-size: 15px;
   border-radius: var(--radius-md);
   border: 2px solid var(--line);
@@ -1177,42 +1189,34 @@
   color: var(--ink);
   outline: none;
 }
-.admin-email-input:focus {
+.admin-login-input:focus {
   border-color: var(--brand-sage);
   box-shadow: 0 0 0 4px rgba(56, 72, 50, 0.12);
 }
-.admin-email-input.has-error {
+.admin-login-input.has-error {
   border-color: #b91c1c;
 }
-
-.admin-pin-display {
-  margin-bottom: 12px;
+.admin-password-wrap {
+  position: relative;
 }
-.admin-pin-input::placeholder {
-  font-size: 15px;
-  letter-spacing: normal;
-  font-weight: 500;
+.admin-password-wrap .admin-login-input {
+  padding-right: 48px;
 }
-
-.admin-pin-input {
-  width: 100%;
-  height: 52px;
-  text-align: center;
-  font-size: 26px;
-  letter-spacing: 0.3em;
-  font-weight: 700;
-  border-radius: var(--radius-md);
-  border: 2px solid var(--line);
-  background: var(--surface-subtle);
+.admin-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  color: var(--ink-muted);
+}
+.admin-password-toggle:hover {
   color: var(--ink);
-  outline: none;
-}
-.admin-pin-input:focus {
-  border-color: var(--brand-sage);
-  box-shadow: 0 0 0 4px rgba(56, 72, 50, 0.12);
-}
-.admin-pin-input.has-error {
-  border-color: #b91c1c;
+  background: var(--surface);
 }
 
 .admin-login-error {
@@ -1220,44 +1224,6 @@
   font-size: 13px;
   font-weight: 500;
   margin-bottom: 12px;
-}
-
-.admin-keypad {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.admin-keypad-btn {
-  height: 48px;
-  border-radius: var(--radius-md);
-  background: var(--surface-subtle);
-  border: 1px solid var(--line);
-  color: var(--ink);
-  font-size: 18px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-.admin-keypad-btn:hover {
-  background: var(--surface-card);
-  border-color: var(--line-dark);
-}
-.admin-keypad-btn:active {
-  transform: scale(0.95);
-}
-
-.admin-hint-box {
-  margin-top: 16px;
-  font-size: 12px;
-  color: var(--ink-muted);
-  padding: 8px;
-  background: var(--surface-subtle);
-  border-radius: var(--radius-sm);
 }
 
 /* --- Toast Notification --- */

@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { login } from '../lib/api.js';
 import { ChairIcon, CloseIcon } from './Icons.jsx';
 
 const EMAIL_KEY = 'f8h_admin_email';
 
-// Remember the admin email on this device, so staff usually only type the passcode
+// Remember the admin email on this device, so staff usually only type the password
 function readSavedEmail() {
   try {
     return localStorage.getItem(EMAIL_KEY) || '';
@@ -21,9 +21,21 @@ function saveEmail(email) {
   }
 }
 
+function EyeIcon({ open }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
+      <circle cx="12" cy="12" r="3" />
+      {!open && <path d="M3 3l18 18" />}
+    </svg>
+  );
+}
+
 export default function AdminLogin({ onLoginSuccess, onCancel }) {
   const [email, setEmail] = useState(readSavedEmail);
-  const [pin, setPin] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const passwordRef = useRef(null);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -33,13 +45,13 @@ export default function AdminLogin({ onLoginSuccess, onCancel }) {
       setError('Please enter the admin email address');
       return;
     }
-    if (!pin.trim()) {
-      setError('Please enter your passcode');
+    if (!password) {
+      setError('Please enter your password');
       return;
     }
 
     setSubmitting(true);
-    login(email.trim(), pin)
+    login(email.trim(), password)
       .then(() => {
         setError('');
         saveEmail(email.trim());
@@ -47,21 +59,9 @@ export default function AdminLogin({ onLoginSuccess, onCancel }) {
       })
       .catch((err) => {
         setError(err.message || 'Login failed. Please try again.');
-        setPin('');
+        setPassword('');
       })
       .finally(() => setSubmitting(false));
-  }
-
-  function handleKeypad(digit) {
-    if (pin.length < 8) {
-      setPin((prev) => prev + digit);
-      setError('');
-    }
-  }
-
-  function handleBackspace() {
-    setPin((prev) => prev.slice(0, -1));
-    setError('');
   }
 
   return (
@@ -76,62 +76,67 @@ export default function AdminLogin({ onLoginSuccess, onCancel }) {
           <ChairIcon />
         </div>
         <h2 id="adminLoginTitle" className="admin-login-title">Admin Access</h2>
-        <p className="admin-login-sub">Sign in with the admin email and passcode to manage orders, products and categories.</p>
+        <p className="admin-login-sub">Sign in with the admin email and password to manage orders, products and categories.</p>
 
-        <form onSubmit={handleSubmit} className="admin-login-form">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              setError('');
-            }}
-            placeholder="Admin email"
-            autoComplete="username"
-            autoFocus={!email}
-            className={`admin-email-input${error ? ' has-error' : ''}`}
-            aria-label="Admin email"
-          />
-          <div className="admin-pin-display">
+        <form onSubmit={handleSubmit} className="admin-login-form" noValidate>
+          <label className="admin-login-field">
+            <span>Email</span>
             <input
-              type="password"
-              value={pin}
+              type="email"
+              value={email}
               onChange={(e) => {
-                setPin(e.target.value.replace(/[^0-9]/g, ''));
+                setEmail(e.target.value);
                 setError('');
               }}
-              placeholder="Passcode"
-              maxLength={8}
-              autoFocus={Boolean(email)}
-              autoComplete="current-password"
-              inputMode="numeric"
-              className={`admin-pin-input${error ? ' has-error' : ''}`}
-              aria-label="Passcode"
+              placeholder="you@example.com"
+              autoComplete="username"
+              autoCapitalize="none"
+              spellCheck={false}
+              autoFocus={!email}
+              className={`admin-login-input${error ? ' has-error' : ''}`}
             />
-          </div>
+          </label>
 
-          {error && <div className="admin-login-error">{error}</div>}
-
-          <div className="admin-keypad">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
-              <button key={n} type="button" className="admin-keypad-btn" onClick={() => handleKeypad(String(n))}>
-                {n}
+          <label className="admin-login-field">
+            <span>Password</span>
+            <div className="admin-password-wrap">
+              <input
+                ref={passwordRef}
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setError('');
+                }}
+                placeholder="Your password"
+                autoComplete="current-password"
+                autoCapitalize="none"
+                spellCheck={false}
+                autoFocus={Boolean(email)}
+                maxLength={128}
+                className={`admin-login-input${error ? ' has-error' : ''}`}
+              />
+              <button
+                type="button"
+                className="admin-password-toggle"
+                onClick={() => {
+                  setShowPassword((v) => !v);
+                  // Keep typing in the field, so Enter still signs in
+                  passwordRef.current?.focus();
+                }}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                aria-pressed={showPassword}
+              >
+                <EyeIcon open={showPassword} />
               </button>
-            ))}
-            <button type="button" className="admin-keypad-btn admin-keypad-clear" onClick={() => setPin('')}>
-              C
-            </button>
-            <button key={0} type="button" className="admin-keypad-btn" onClick={() => handleKeypad('0')}>
-              0
-            </button>
-            <button type="button" className="admin-keypad-btn admin-keypad-back" onClick={handleBackspace} aria-label="Backspace">
-              ⌫
-            </button>
-          </div>
+            </div>
+          </label>
+
+          {error && <div className="admin-login-error" role="alert">{error}</div>}
 
           <div className="admin-login-actions">
             <button type="submit" className="btn-primary" disabled={submitting} style={{ width: '100%', justifyContent: 'center' }}>
-              Unlock Catalog Manager
+              {submitting ? 'Signing in…' : 'Sign in'}
             </button>
             {onCancel && (
               <button type="button" className="btn-secondary" style={{ width: '100%', justifyContent: 'center', marginTop: '8px' }} onClick={onCancel}>
