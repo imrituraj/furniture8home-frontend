@@ -15,7 +15,7 @@ import {
 } from '../lib/api.js';
 import { assetUrl, productUrl } from '../lib/storefront.js';
 import { readResizedImage } from '../lib/images.js';
-import { ChairIcon, CloseIcon, HeartIcon, WaIcon } from './Icons.jsx';
+import { LogoMark, CloseIcon, HeartIcon, WaIcon } from './Icons.jsx';
 
 const PRESET_IMAGES = [
   { label: 'Aura Lilac Dining', url: 'images/chairs/B612_20221205_111922_652.jpg' },
@@ -261,7 +261,7 @@ export default function AdminDashboard({ nav, onExit, onLogout }) {
         <div className="admin-nav-inner wrap">
           <div className="admin-brand">
             <div className="admin-brand-icon">
-              <ChairIcon />
+              <LogoMark />
             </div>
             <div>
               <div className="admin-brand-title">

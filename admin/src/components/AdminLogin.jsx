@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { login } from '../lib/api.js';
-import { ChairIcon, CloseIcon } from './Icons.jsx';
+import { LogoMark, CloseIcon } from './Icons.jsx';
 
 const EMAIL_KEY = 'f8h_admin_email';
 
@@ -73,7 +73,7 @@ export default function AdminLogin({ onLoginSuccess, onCancel }) {
           </button>
         )}
         <div className="admin-login-icon">
-          <ChairIcon />
+          <LogoMark />
         </div>
         <h2 id="adminLoginTitle" className="admin-login-title">Admin Access</h2>
         <p className="admin-login-sub">Sign in with the admin email and password to manage orders, products and categories.</p>

@@ -1,4 +1,4 @@
-import { CartIcon, ChairIcon, CloseIcon, HeartIcon, MenuIcon, MoonIcon, PhoneIcon, SunIcon, WaIcon } from './Icons.jsx';
+import { CartIcon, CloseIcon, LogoMark, HeartIcon, MenuIcon, MoonIcon, PhoneIcon, SunIcon, WaIcon } from './Icons.jsx';
 import { waLink, TEL_LINK } from '../lib/whatsapp.js';
 import { useLang } from '../i18n/LanguageContext.jsx';
 import { useCategories } from '../lib/categories.jsx';
@@ -66,7 +66,7 @@ export default function Header({
       <header className={`site-header${menuOpen ? ' menu-open' : ''}`}>
         <div className="wrap nav">
           <a href="#hero" className="logo" onClick={onCloseMenu} aria-label="Furniture8home">
-            <span className="logo-icon"><ChairIcon /></span>
+            <span className="logo-icon"><LogoMark size={24} /></span>
             <span className="logo-words">
               <span className="logo-text">Furniture<span className="num">8</span>home</span>
               <span className="logo-sub">{t('logoSub')}</span>

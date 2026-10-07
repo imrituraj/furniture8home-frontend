@@ -12,6 +12,7 @@ import {
   TimberIcon,
   TruckIcon,
   WaIcon,
+  LogoMark,
 } from './Icons.jsx';
 import { TEL_LINK, waLink, SHOP_EMAIL } from '../lib/whatsapp.js';
 import { useLang } from '../i18n/LanguageContext.jsx';
@@ -244,7 +245,10 @@ export function Footer({ onFilter, onOpenAdmin }) {
       </div>
       <div className="wrap foot-grid">
         <div className="foot-col foot-about">
-          <div className="logo-text">Furniture<span className="num">8</span>home</div>
+          <div className="foot-logo">
+            <span className="logo-icon"><LogoMark size={24} /></span>
+            <span className="logo-text">Furniture<span className="num">8</span>home</span>
+          </div>
           <p>{t('footAbout')}</p>
           <div className="foot-tag">{t('footTag')}</div>
         </div>
