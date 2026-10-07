@@ -96,3 +96,11 @@ export const addCategory = (data) => request('POST', '/admin/categories', data);
 export const updateCategory = (id, updates) => request('PATCH', categoryPath(id), updates);
 export const deleteCategory = (id) => request('DELETE', categoryPath(id));
 export const reorderCategories = (ids) => request('PUT', '/admin/categories/order', { ids });
+
+export const fetchBookings = () => request('GET', '/admin/bookings');
+export const updateBooking = (id, updates) => request('PATCH', `/admin/bookings/${encodeURIComponent(id)}`, updates);
+
+export const fetchCoupons = () => request('GET', '/admin/coupons');
+export const addCoupon = (data) => request('POST', '/admin/coupons', data);
+export const updateCoupon = (code, updates) => request('PATCH', `/admin/coupons/${encodeURIComponent(code)}`, updates);
+export const deleteCoupon = (code) => request('DELETE', `/admin/coupons/${encodeURIComponent(code)}`);

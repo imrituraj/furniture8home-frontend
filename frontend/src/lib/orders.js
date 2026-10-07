@@ -39,3 +39,9 @@ export function loadRazorpay() {
   }
   return razorpayScript;
 }
+
+export const checkCoupon = (code, items) => request('POST', '/coupons/check', { code, items });
+export const trackOrder = (orderId, phone) => request('POST', '/orders/track', { orderId, phone });
+export const fetchAvailability = (showroom, date) =>
+  request('GET', `/bookings/availability?showroom=${encodeURIComponent(showroom)}&date=${encodeURIComponent(date)}`);
+export const bookVisit = (booking) => request('POST', '/bookings', booking);

@@ -1,4 +1,7 @@
 import { useEffect, useRef } from 'react';
+import Gallery from './Gallery.jsx';
+import { FitDrawing, RoomFitForm } from './RoomFit.jsx';
+import { footprint } from '../lib/fit.js';
 import { CHAISE_OPTIONS, FABRICS } from '../data/content.js';
 import { CartIcon, CloseIcon, HeartIcon, PhoneIcon, StarIcon, WaIcon } from './Icons.jsx';
 import ShareButton from './ShareButton.jsx';
@@ -20,7 +23,7 @@ export const CHAISE_KEY = {
   'Custom Measurement': 'chaiseCustom',
 };
 
-export default function ProductModal({ product, related = [], fabric, chaise, saved, onClose, onOpen, onFabric, onChaise, onToggleWish, onAddToCart, onBuyNow }) {
+export default function ProductModal({ product, related = [], fabric, chaise, saved, onClose, onOpen, onFabric, onChaise, onToggleWish, onAddToCart, onBuyNow, room, onRoom }) {
   const { t, localize } = useLang();
   const categories = useCategories();
   const scrollRef = useRef(null);
@@ -49,9 +52,7 @@ export default function ProductModal({ product, related = [], fabric, chaise, sa
         <button className="modal-close" aria-label={t('closeModal')} type="button" onClick={onClose}><CloseIcon /></button>
         <div className="modal-grid">
           <div className="modal-gallery">
-            <a className="modal-img" href={product.img} target="_blank" rel="noopener noreferrer" title={t('zoomNote')}>
-              <img src={product.img} alt={item.name} />
-            </a>
+            <Gallery images={[product.img, ...(product.images || [])]} alt={item.name} />
             <p className="modal-gallery-note">{t('zoomNote')}</p>
           </div>
 
@@ -99,6 +100,14 @@ export default function ProductModal({ product, related = [], fabric, chaise, sa
               <div><dt>{t('warranty')}</dt><dd>{t('warrantyVal')}</dd></div>
               <div><dt>{t('delivery')}</dt><dd>{t('deliveryVal')}</dd></div>
             </dl>
+
+            {footprint(product) && (
+              <div className="option-group fit-section">
+                <div className="option-title">{t('fitTitle')}</div>
+                <RoomFitForm room={room} onChange={onRoom} compact />
+                <FitDrawing product={product} room={room} />
+              </div>
+            )}
 
             <div className="modal-actions">
               {!isStockOut && (
