@@ -115,7 +115,7 @@ export default function App() {
       .sort((a, b) => {
         if (sort === 'price-asc') return (a.priceNum || 0) - (b.priceNum || 0);
         if (sort === 'price-desc') return (b.priceNum || 0) - (a.priceNum || 0);
-        if (sort === 'rating-desc') return (b.rating || 0) - (a.rating || 0);
+        if (sort === 'rating-desc') return (b.reviews === 0 ? 0 : b.rating || 0) - (a.reviews === 0 ? 0 : a.rating || 0);
         if (sort === 'name-asc') return localize(a).name.localeCompare(localize(b).name, 'as');
         return a.id - b.id;
       });

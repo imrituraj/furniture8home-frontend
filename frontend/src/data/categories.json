@@ -43,5 +43,14 @@
     "sort": 4,
     "hidden": false,
     "chaise": false
+  },
+  {
+    "id": "Beds",
+    "name": "Beds",
+    "nameAs": "বিচনা",
+    "img": "images/beds/noor-velvet-wingback-king-bed.jpg",
+    "sort": 5,
+    "hidden": false,
+    "chaise": false
   }
 ]

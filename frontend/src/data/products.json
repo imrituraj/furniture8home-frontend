@@ -978,5 +978,119 @@
       "High-resilience foam core",
       "Supportive posture slope"
     ]
+  },
+  {
+    "id": 601,
+    "slug": "aranya-solid-teak-king-bed",
+    "name": "Aranya Solid Teak King Bed",
+    "cat": "Beds",
+    "price": "\u20b968,000",
+    "priceNum": 68000,
+    "badge": "100% Teak",
+    "reviews": 0,
+    "img": "images/beds/aranya-teak-king-bed.jpg",
+    "desc": "A tall panelled headboard and a rail-and-slat frame built entirely from seasoned Assam teak in our workshop. Finished in a warm natural polish that deepens with age.",
+    "dims": "King \u00b7 W 198cm \u00b7 D 218cm \u00b7 H 110cm \u00b7 Fits 72 \u00d7 78 in mattress",
+    "material": "Seasoned Solid Teak \u00b7 Natural Melamine Polish \u00b7 Solid Wood Slats",
+    "features": [
+      "Made to order in king or queen",
+      "Solid teak slats, no plywood",
+      "Mattress sold separately"
+    ]
+  },
+  {
+    "id": 602,
+    "slug": "haven-upholstered-storage-queen-bed",
+    "name": "Haven Upholstered Storage Bed \u2014 Queen, Ash Grey",
+    "cat": "Beds",
+    "price": "\u20b952,000",
+    "priceNum": 52000,
+    "badge": "Hydraulic Storage",
+    "reviews": 0,
+    "img": "images/beds/haven-storage-queen-bed.jpg",
+    "desc": "A soft channel-stitched headboard over a full-size storage box. The base lifts on gas-assisted hydraulics, so bedding and suitcases stay out of sight.",
+    "dims": "Queen \u00b7 W 168cm \u00b7 D 215cm \u00b7 H 115cm \u00b7 Fits 60 \u00d7 78 in mattress",
+    "material": "Performance Fabric \u00b7 Engineered Wood Box \u00b7 Gas-Lift Hydraulics",
+    "features": [
+      "Full-size storage under the mattress",
+      "Soft-close hydraulic lift",
+      "Fabric colour can be changed"
+    ]
+  },
+  {
+    "id": 603,
+    "slug": "noor-velvet-wingback-king-bed",
+    "name": "Noor Velvet Wingback Bed \u2014 King, Emerald",
+    "cat": "Beds",
+    "price": "\u20b974,000",
+    "priceNum": 74000,
+    "badge": "Luxury Velvet",
+    "reviews": 0,
+    "img": "images/beds/noor-velvet-wingback-king-bed.jpg",
+    "desc": "A statement bed with a tall button-tufted headboard and curved wings, upholstered in deep emerald velvet over a solid hardwood frame.",
+    "dims": "King \u00b7 W 205cm \u00b7 D 222cm \u00b7 H 135cm \u00b7 Fits 72 \u00d7 78 in mattress",
+    "material": "Luxe Velvet \u00b7 Hardwood Frame \u00b7 High Density Foam Headboard",
+    "features": [
+      "Hand-tufted headboard",
+      "Choose from 20+ velvet shades",
+      "Mattress sold separately"
+    ]
+  },
+  {
+    "id": 604,
+    "slug": "kaya-sheesham-platform-bed",
+    "name": "Kaya Sheesham Platform Bed \u2014 Queen",
+    "cat": "Beds",
+    "price": "\u20b945,000",
+    "priceNum": 45000,
+    "badge": "Japandi Style",
+    "reviews": 0,
+    "img": "images/beds/kaya-sheesham-platform-bed.jpg",
+    "desc": "Low and calm, in the Japandi style: a wide sheesham headboard with built-in side ledges and a platform base that needs no box spring.",
+    "dims": "Queen \u00b7 W 190cm \u00b7 D 212cm \u00b7 H 80cm \u00b7 Fits 60 \u00d7 78 in mattress",
+    "material": "Solid Sheesham \u00b7 Matte Natural Finish \u00b7 Solid Wood Slats",
+    "features": [
+      "Built-in bedside ledges",
+      "Low platform, no box spring",
+      "Also made in king"
+    ]
+  },
+  {
+    "id": 605,
+    "slug": "rhea-cane-headboard-queen-bed",
+    "name": "Rhea Cane Headboard Bed \u2014 Queen",
+    "cat": "Beds",
+    "price": "\u20b956,000",
+    "priceNum": 56000,
+    "badge": "Natural Cane",
+    "reviews": 0,
+    "img": "images/beds/rhea-cane-headboard-bed.jpg",
+    "desc": "Hand-woven natural cane set into a solid teak frame. Light, airy and right at home in Assam's warm, humid months.",
+    "dims": "Queen \u00b7 W 170cm \u00b7 D 214cm \u00b7 H 120cm \u00b7 Fits 60 \u00d7 78 in mattress",
+    "material": "Hand-Woven Natural Cane \u00b7 Solid Teak Frame \u00b7 Solid Wood Slats",
+    "features": [
+      "Hand-woven by local artisans",
+      "Breathable cane headboard",
+      "Mattress sold separately"
+    ]
+  },
+  {
+    "id": 606,
+    "slug": "tara-single-bed-with-drawers",
+    "name": "Tara Single Bed with Drawers",
+    "cat": "Beds",
+    "price": "\u20b928,000",
+    "priceNum": 28000,
+    "badge": "Practical Living",
+    "reviews": 0,
+    "img": "images/beds/tara-single-bed-drawers.jpg",
+    "desc": "A compact single bed for kids' rooms and guest rooms, with two deep pull-out drawers built into the base.",
+    "dims": "Single \u00b7 W 100cm \u00b7 D 205cm \u00b7 H 100cm \u00b7 Fits 36 \u00d7 75 in mattress",
+    "material": "Engineered Wood \u00b7 Fabric Headboard \u00b7 Metal Drawer Runners",
+    "features": [
+      "Two deep storage drawers",
+      "Rounded corners for kids' rooms",
+      "Mattress sold separately"
+    ]
   }
 ]

@@ -43,7 +43,7 @@ export function ProductCard({ product, saved, onOpen, onToggleWish, room }) {
       <div className="card-body">
         <div className="card-meta">
           <span>{categories.label(product.cat)}</span>
-          <span className="card-rating"><StarIcon size={12} /> {product.rating || '4.9'} <span>({product.reviews || 20})</span></span>
+          {product.reviews !== 0 && <span className="card-rating"><StarIcon size={12} /> {product.rating || '4.9'} <span>({product.reviews || 20})</span></span>}
         </div>
         <h3 className="card-title">
           <button type="button" onClick={() => onOpen(product)}>{item.name}</button>

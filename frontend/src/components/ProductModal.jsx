@@ -61,7 +61,7 @@ export default function ProductModal({ product, related = [], fabric, chaise, sa
             {isStockOut && <div className="modal-stockout">{t('stockOutBanner')}</div>}
             <h2 className="modal-title">{item.name}</h2>
             <div className="modal-rating">
-              <StarIcon size={14} /> {product.rating || '4.9'} <span>({product.reviews || 20})</span>
+              {product.reviews !== 0 && <><StarIcon size={14} /> {product.rating || '4.9'} <span>({product.reviews || 20})</span></>}
               {item.badge && <span className="card-badge">{item.badge}</span>}
             </div>
             <div className="modal-price-row">
