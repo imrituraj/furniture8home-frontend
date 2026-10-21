@@ -71,6 +71,13 @@ export default function AdminDashboard({ nav, onExit, onLogout }) {
     }
   }
 
+  // Reload categories whenever the product form opens, so one just added (maybe on another device) is listed
+  const formOpen = Boolean(editingProduct || isCreating);
+  useEffect(() => {
+    if (!formOpen) return;
+    fetchCategories().then(setCategories).catch(() => {});
+  }, [formOpen]);
+
   useEffect(() => {
     fetchCategories()
       .then(setCategories)
@@ -893,6 +900,9 @@ export default function AdminDashboard({ nav, onExit, onLogout }) {
 function ProductFormModal({ product, categories, isCreating, onClose, onSave }) {
   const [name, setName] = useState(product?.name || '');
   const [cat, setCat] = useState(product?.cat || categories[0]?.id || '');
+  useEffect(() => {
+    if (!cat && categories[0]) setCat(categories[0].id);
+  }, [cat, categories]);
   const [priceNum, setPriceNum] = useState(product?.priceNum || 15000);
   const [badge, setBadge] = useState(product?.badge || '');
   const [inStock, setInStock] = useState(product?.inStock !== false);

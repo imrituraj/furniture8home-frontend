@@ -1540,3 +1540,16 @@
 @media (max-width: 700px) {
   .visit-row { grid-template-columns: 1fr; gap: 6px; }
 }
+
+/* --- Header on smaller screens: wrap the buttons and let the tabs scroll, so the page never gets wider than the screen --- */
+@media (max-width: 1180px) {
+  .admin-nav-inner { flex-wrap: wrap; }
+  .admin-nav-actions { flex-wrap: wrap; width: 100%; min-width: 0; }
+  .admin-view-tabs { max-width: 100%; overflow-x: auto; scrollbar-width: none; flex-shrink: 0; }
+  .admin-view-tabs::-webkit-scrollbar { display: none; }
+  .admin-view-tabs a { flex-shrink: 0; }
+}
+@media (max-width: 640px) {
+  .admin-view-tabs { flex-basis: 100%; }
+  .admin-nav-actions .admin-btn { padding: 7px 12px; }
+}
