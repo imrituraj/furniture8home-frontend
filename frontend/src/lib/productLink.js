@@ -34,3 +34,11 @@ export function clearProductUrl() {
   const search = params.toString();
   window.history.pushState({}, '', `${window.location.pathname}${search ? `?${search}` : ''}`);
 }
+
+// Product names are real links (crawlers follow them, and they open in a new tab with
+// Ctrl/Cmd-click); a plain click opens the product in place.
+export function openOnPlainClick(event, open) {
+  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  event.preventDefault();
+  open();
+}

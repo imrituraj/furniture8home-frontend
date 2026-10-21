@@ -8,6 +8,7 @@ import ShareButton from './ShareButton.jsx';
 import { TEL_LINK, waLink } from '../lib/whatsapp.js';
 import { useLang } from '../i18n/LanguageContext.jsx';
 import { useCategories } from '../lib/categories.jsx';
+import { openOnPlainClick } from '../lib/productLink.js';
 
 export const FABRIC_KEY = {
   'Royal Navy': 'fabricNavy',
@@ -146,11 +147,11 @@ export default function ProductModal({ product, related = [], fabric, chaise, sa
               {related.map((other) => {
                 const otherItem = localize(other);
                 return (
-                  <button key={other.id} type="button" className="related-item" onClick={() => onOpen(other, { replace: true })}>
-                    <img src={other.img} alt="" loading="lazy" />
+                  <a key={other.id} href={`/?product=${encodeURIComponent(other.slug)}`} className="related-item" onClick={(e) => openOnPlainClick(e, () => onOpen(other, { replace: true }))}>
+                    <img src={other.img} alt={otherItem.name} loading="lazy" />
                     <span className="related-name">{otherItem.name}</span>
                     <span className="related-price">{other.price}</span>
-                  </button>
+                  </a>
                 );
               })}
             </div>

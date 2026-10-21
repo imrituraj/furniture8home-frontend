@@ -5,6 +5,7 @@ import { waLink } from '../lib/whatsapp.js';
 import { useLang } from '../i18n/LanguageContext.jsx';
 import { FitBadge, RoomFitForm } from './RoomFit.jsx';
 import { useCategories } from '../lib/categories.jsx';
+import { openOnPlainClick } from '../lib/productLink.js';
 
 const PAGE_SIZE = 12;
 
@@ -46,7 +47,7 @@ export function ProductCard({ product, saved, onOpen, onToggleWish, room }) {
           {product.reviews !== 0 && <span className="card-rating"><StarIcon size={12} /> {product.rating || '4.9'} <span>({product.reviews || 20})</span></span>}
         </div>
         <h3 className="card-title">
-          <button type="button" onClick={() => onOpen(product)}>{item.name}</button>
+          <a href={`/?product=${encodeURIComponent(product.slug)}`} onClick={(e) => openOnPlainClick(e, () => onOpen(product))}>{item.name}</a>
         </h3>
         {product.dims && <p className="card-dims">{product.dims}</p>}
         <div className="card-foot">

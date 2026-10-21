@@ -66,6 +66,21 @@
       "dest": "/admin/index.html"
     },
     {
+      "src": "/sitemap\\.xml",
+      "dest": "/api/seo?type=sitemap"
+    },
+    {
+      "src": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "product",
+          "value": "(?<slug>[A-Za-z0-9_-]{1,200})"
+        }
+      ],
+      "dest": "/api/seo?type=product&slug=$slug"
+    },
+    {
       "handle": "filesystem"
     }
   ]
