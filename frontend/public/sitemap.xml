@@ -12,16 +12,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://furniture8home.com/?product=aura-dusty-lilac-dining-chairs</loc>
-    <lastmod>2026-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://furniture8home.com/images/chairs/B612_20221205_111922_652.jpg</image:loc>
-      <image:title>Aura Curved Dining Chairs — Dusty Lilac (Pair)</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://furniture8home.com/?product=celeste-marine-blue-accent-chairs</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -492,13 +482,103 @@
     </image:image>
   </url>
   <url>
-    <loc>https://furniture8home.com/?product=dalton-wingback-chair</loc>
-    <lastmod>2026-10-07</lastmod>
+    <loc>https://furniture8home.com/?product=premium-wooden-corner-glass-showcase</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home-backend.ritur-dev.workers.dev/media/d2e61f4ffe72863c7e5a6eecaa8091b0</image:loc>
+      <image:title>Premium Wooden Corner Glass Showcase</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://furniture8home.com/?product=premium-wooden-glass-showcase-teak-wood</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home-backend.ritur-dev.workers.dev/media/85fc9318da04dc01aa4f5765afd1c6f8</image:loc>
+      <image:title>Premium Wooden Glass Showcase : Teak Wood</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://furniture8home.com/?product=aura-curved-dining-chairs-dusty-lilac-pair</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home.com/images/chairs/B612_20221205_111922_652.jpg</image:loc>
+      <image:title>Aura Curved Dining Chairs — Dusty Lilac (Pair)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://furniture8home.com/?product=dalton-modern-wingback-chair-slate-grey</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://furniture8home.com/images/original_site/prod_9_dalton_wingback_chair.jpeg</image:loc>
       <image:title>Dalton Modern Wingback Chair — Slate Grey</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://furniture8home.com/?product=aranya-solid-teak-king-bed</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home-backend.ritur-dev.workers.dev/media/85c63005b60ad56bf2c421cb5e60a78b</image:loc>
+      <image:title>Aranya Solid Teak King Bed</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://furniture8home.com/?product=haven-teak-wood-storage-bed-queen</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home-backend.ritur-dev.workers.dev/media/342cb33e270f3a61848da2b492be0393</image:loc>
+      <image:title>Haven Teak wood Storage Bed — Queen</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://furniture8home.com/?product=noor-velvet-bed-king-emerald</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home-backend.ritur-dev.workers.dev/media/1ef4cabb62d5e54979aa618533557804</image:loc>
+      <image:title>Noor Velvet  Bed — King, Emerald</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://furniture8home.com/?product=kaya-teak-wood-platform-bed-king</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home-backend.ritur-dev.workers.dev/media/24b7d7c65f3afd08c811340af6d4cf5c</image:loc>
+      <image:title>Kaya Teak wood Platform Bed — king</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://furniture8home.com/?product=rhea-teak-headboard-bed-queen</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home-backend.ritur-dev.workers.dev/media/9c63f942db738e5f3f54d05e940b66d5</image:loc>
+      <image:title>Rhea Teak Headboard Bed — Queen</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://furniture8home.com/?product=king-size-bed-teak-wood</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://furniture8home-backend.ritur-dev.workers.dev/media/b090c17edc9080242adc611d52651efa</image:loc>
+      <image:title>king Size Bed Teak wood</image:title>
     </image:image>
   </url>
   <url>
