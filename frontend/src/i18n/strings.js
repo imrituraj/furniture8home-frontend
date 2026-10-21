@@ -1,5 +1,13 @@
 export const STRINGS = {
   en: {
+    footLegal: "Policies",
+    legalPrivacy: "Privacy Policy",
+    legalTerms: "Terms of Use",
+    legalShipping: "Shipping & Delivery",
+    legalRefunds: "Cancellation & Refunds",
+    legalContact: "Contact Us",
+    agreeBefore: "By placing your order you agree to our",
+    agreeAnd: "and",
     couponPlaceholder: "Discount code",
     couponApply: "Apply",
     couponRemove: "Remove",
@@ -339,6 +347,14 @@ export const STRINGS = {
     waPayPaid: "Paid online",
   },
   as: {
+    footLegal: "নীতি",
+    legalPrivacy: "গোপনীয়তা নীতি",
+    legalTerms: "ব্যৱহাৰৰ চৰ্ত",
+    legalShipping: "ডেলিভাৰী নীতি",
+    legalRefunds: "বাতিল আৰু ধন ঘূৰাই দিয়া",
+    legalContact: "যোগাযোগ",
+    agreeBefore: "অৰ্ডাৰ দি আপুনি আমাৰ",
+    agreeAnd: "আৰু",
     couponPlaceholder: "ৰেহাই ক'ড",
     couponApply: "প্ৰয়োগ কৰক",
     couponRemove: "আঁতৰাওক",

@@ -430,6 +430,9 @@ export default function Checkout({ open, lines, total, onClose, onComplete }) {
               {method === 'whatsapp' && <WaIcon size={18} />}
               {submitLabel}
             </button>
+            <p className="checkout-agree">
+              {t('agreeBefore')} <a href="/terms.html" target="_blank" rel="noopener">{t('legalTerms')}</a> {t('agreeAnd')} <a href="/refunds.html" target="_blank" rel="noopener">{t('legalRefunds')}</a>.
+            </p>
           </aside>
         </form>
       </div>

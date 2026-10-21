@@ -282,6 +282,13 @@ export function Footer({ onFilter, onOpenAdmin, onTrack, onBook }) {
           <p className="foot-wa"><a href={`mailto:${SHOP_EMAIL}`}>{SHOP_EMAIL}</a></p>
         </div>
       </div>
+      <nav className="wrap foot-legal" aria-label={t('footLegal')}>
+        <a href="/privacy.html">{t('legalPrivacy')}</a>
+        <a href="/terms.html">{t('legalTerms')}</a>
+        <a href="/shipping.html">{t('legalShipping')}</a>
+        <a href="/refunds.html">{t('legalRefunds')}</a>
+        <a href="/contact.html">{t('legalContact')}</a>
+      </nav>
       <div className="wrap foot-bottom">
         <div>{t('copyright')}</div>
         <div className="foot-bottom-right">

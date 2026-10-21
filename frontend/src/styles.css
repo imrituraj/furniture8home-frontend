@@ -1154,3 +1154,10 @@ button.mobile-nav-link { text-align: left; font: inherit; font-family: var(--fon
   .fit-toggle span { display: none; }
   .fit-toggle { padding: 0 13px; height: 42px; }
 }
+
+/* ---------- Policies ---------- */
+.foot-legal { display: flex; flex-wrap: wrap; gap: 8px 22px; padding-top: 18px; padding-bottom: 4px; border-top: 1px solid var(--band-line); font-size: 13px; }
+.foot-legal a { color: var(--band-ink); }
+.foot-legal a:hover { color: #E2B486; }
+.checkout-agree { margin-top: 10px; font-size: 12.5px; color: var(--ink-muted); text-align: center; }
+.checkout-agree a { color: var(--ink-secondary); text-decoration: underline; }
