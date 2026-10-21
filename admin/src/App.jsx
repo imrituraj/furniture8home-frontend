@@ -9,6 +9,8 @@ import OrdersDashboard from './components/OrdersDashboard.jsx';
 import { isAuthenticated, onSessionExpired } from './lib/api.js';
 import { STOREFRONT_URL } from './lib/storefront.js';
 
+const ADMIN_NAME = 'Manoj Sharma';
+
 const VIEWS = [
   { key: 'orders', label: 'Orders' },
   { key: 'sales', label: 'Sales' },
@@ -33,6 +35,14 @@ export default function App() {
   const [authed, setAuthed] = useState(isAuthenticated);
   const [view, setView] = useState(readView);
   const [orderLink, setOrderLink] = useState(readOrderLink);
+  const [welcome, setWelcome] = useState(false);
+
+  // Greet the admin for a few seconds after each login
+  useEffect(() => {
+    if (!welcome) return;
+    const timer = setTimeout(() => setWelcome(false), 4000);
+    return () => clearTimeout(timer);
+  }, [welcome]);
 
   useEffect(() => onSessionExpired(() => setAuthed(false)), []);
 
@@ -50,7 +60,15 @@ export default function App() {
   }
 
   if (!authed) {
-    return <AdminLogin onLoginSuccess={() => setAuthed(true)} onCancel={openStore} />;
+    return (
+      <AdminLogin
+        onLoginSuccess={() => {
+          setAuthed(true);
+          setWelcome(true);
+        }}
+        onCancel={openStore}
+      />
+    );
   }
 
   const nav = (
@@ -64,10 +82,23 @@ export default function App() {
   );
 
   const props = { nav, onExit: openStore, onLogout: () => setAuthed(false) };
-  if (view === 'catalog') return <AdminDashboard {...props} />;
-  if (view === 'categories') return <CategoriesDashboard {...props} />;
-  if (view === 'sales') return <SalesDashboard {...props} />;
-  if (view === 'visits') return <VisitsDashboard {...props} />;
-  if (view === 'discounts') return <DiscountsDashboard {...props} />;
-  return <OrdersDashboard {...props} openOrderId={orderLink} />;
+  let page;
+  if (view === 'catalog') page = <AdminDashboard {...props} />;
+  else if (view === 'categories') page = <CategoriesDashboard {...props} />;
+  else if (view === 'sales') page = <SalesDashboard {...props} />;
+  else if (view === 'visits') page = <VisitsDashboard {...props} />;
+  else if (view === 'discounts') page = <DiscountsDashboard {...props} />;
+  else page = <OrdersDashboard {...props} openOrderId={orderLink} />;
+
+  return (
+    <>
+      {page}
+      {welcome && (
+        <div className="admin-welcome" role="status">
+          <span>Welcome back, {ADMIN_NAME} 👋</span>
+          <button type="button" onClick={() => setWelcome(false)} aria-label="Dismiss">×</button>
+        </div>
+      )}
+    </>
+  );
 }
