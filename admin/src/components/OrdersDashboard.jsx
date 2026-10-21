@@ -134,6 +134,14 @@ export default function OrdersDashboard({ nav, onExit, onLogout, openOrderId = n
 
   const selected = orders.find((o) => o.id === selectedId) || null;
 
+  // Esc closes the open order
+  useEffect(() => {
+    if (!selectedId) return undefined;
+    const onKey = (event) => { if (event.key === 'Escape') closeOrder(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [selectedId]);
+
   useEffect(() => {
     if (!loading && selectedId && !selected) {
       showToast(`Order ${selectedId} was not found`, 'warning');

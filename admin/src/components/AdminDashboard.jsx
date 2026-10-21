@@ -215,7 +215,11 @@ export default function AdminDashboard({ nav, onExit, onLogout }) {
   }
 
   async function handleResetCatalog() {
-    if (window.confirm('Reset catalog to the factory defaults? Any custom additions or price updates will be restored to initial defaults.')) {
+    // Wipes every product added or edited since launch, so it needs more than one click
+    const answer = window.prompt(
+      `This deletes all ${products.length} current products, including every piece, photo and price you have added or changed, and puts back the original starter catalog. It cannot be undone.\n\nDownload products.json first (Export / Import) if you might want them back.\n\nType RESET to continue.`,
+    );
+    if (answer?.trim().toUpperCase() === 'RESET') {
       const ok = await run(() => resetCatalog().then(() => true));
       if (ok) showToast('Catalog restored to factory defaults.', 'warning');
     }
@@ -231,6 +235,8 @@ export default function AdminDashboard({ nav, onExit, onLogout }) {
       setImportError(err.message || 'Failed to parse JSON');
       return;
     }
+    const count = Array.isArray(data) ? data.length : 0;
+    if (!window.confirm(`Replace all ${products.length} current products with the ${count} in this file? Products not in the file will be deleted.`)) return;
     try {
       setProducts(await importCatalog(data));
       setShowExportModal(false);
@@ -543,7 +549,7 @@ export default function AdminDashboard({ nav, onExit, onLogout }) {
                             <span>•</span>
                             <span className="admin-slug">{p.slug}</span>
                             <span>•</span>
-                            <span>★ {p.rating} ({p.reviews})</span>
+                            {p.reviews > 0 && <span>★ {p.rating} ({p.reviews})</span>}
                           </div>
                         </td>
 
@@ -709,7 +715,7 @@ export default function AdminDashboard({ nav, onExit, onLogout }) {
 
                       <div className="admin-card-price-row">
                         <span className="admin-card-price">{p.price}</span>
-                        <span className="admin-card-rating">★ {p.rating}</span>
+                        {p.reviews > 0 && <span className="admin-card-rating">★ {p.rating}</span>}
                       </div>
 
                       <div className="admin-card-switches">
@@ -830,7 +836,7 @@ export default function AdminDashboard({ nav, onExit, onLogout }) {
               <h3>1. Download products.json</h3>
               <p>
                 Download the updated catalog JSON file with all your latest prices, new products, and stock statuses.
-                Changes are saved on the server automatically — use this file as a backup, or replace <code>worker/seed/products.json</code> to change the factory defaults.
+                Changes are saved on the server automatically. Keep this file as a backup before big changes.
               </p>
               <div className="admin-export-btn-row">
                 <button
@@ -947,7 +953,8 @@ function ProductFormModal({ product, categories, isCreating, onClose, onSave }) 
   const [dims, setDims] = useState(product?.dims || '');
   const [material, setMaterial] = useState(product?.material || '');
   const [rating, setRating] = useState(product?.rating || 4.9);
-  const [reviews, setReviews] = useState(product?.reviews || 24);
+  // 0 reviews hides the stars on the store, so new pieces don't show a made-up rating
+  const [reviews, setReviews] = useState(product?.reviews ?? 0);
 
   // Features list
   const [features, setFeatures] = useState(
@@ -1007,7 +1014,7 @@ function ProductFormModal({ product, categories, isCreating, onClose, onSave }) 
       dims: dims.trim(),
       material: material.trim(),
       rating: Number(rating) || 4.9,
-      reviews: Number(reviews) || 10,
+      reviews: Math.max(0, Math.floor(Number(reviews) || 0)),
       features,
     };
 
@@ -1325,6 +1332,7 @@ function ProductFormModal({ product, categories, isCreating, onClose, onSave }) 
                       value={reviews}
                       onChange={(e) => setReviews(e.target.value)}
                     />
+                    <span className="admin-help-text">0 hides the stars on the store until you have real reviews.</span>
                   </div>
                 </div>
 
