@@ -39,13 +39,16 @@
   width: 42px;
   height: 42px;
   border-radius: var(--radius-md);
-  background: #26312A;
-  color: #E2B486;
+  background: #fff;
+  color: #1b1b1b;
+  box-shadow: inset 0 0 0 2px #1b1b1b;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
+
+.admin-brand-icon svg { width: 34px; height: 34px; }
 
 .admin-brand-title {
   font-family: var(--font-serif);
@@ -1142,13 +1145,14 @@
   text-align: center;
 }
 
-.admin-login-icon svg { width: 32px; height: 32px; }
+.admin-login-icon svg { width: 42px; height: 42px; }
 .admin-login-icon {
   width: 54px;
   height: 54px;
   border-radius: var(--radius-md);
-  background: #26312A;
-  color: #E2B486;
+  background: #fff;
+  color: #1b1b1b;
+  box-shadow: inset 0 0 0 2px #1b1b1b;
   display: flex;
   align-items: center;
   justify-content: center;

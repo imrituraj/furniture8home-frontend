@@ -1,3 +1,5 @@
+import { useId } from 'react';
+
 export function WaIcon({ size = 17 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -117,15 +119,20 @@ export function ShieldIcon(props) {
 }
 
 /**
- * The Furniture8home mark: an "8" made of an armchair's backrest and seat, on teak legs.
- * Strokes only (currentColor); place it on the brand tile.
+ * The Furniture8home mark: a sofa inside a house. Drawn in the current text colour; the
+ * logo tile around it (white, dark outline) comes from the container's CSS.
  */
-export function LogoMark({ size = 24, strokeWidth = 4.5 }) {
+export function LogoMark({ size = 24 }) {
+  const mask = `logo-${useId().replace(/:/g, '')}`;
   return (
-    <svg width={size} height={size} viewBox="8 7 48 50" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="20" y="11" width="24" height="19" rx="8.5" />
-      <rect x="14" y="30" width="36" height="18" rx="8.5" />
-      <path d="M21 48v5M43 48v5" />
+    <svg width={size} height={size} viewBox="88 88 524 524" fill="currentColor" aria-hidden="true">
+      <mask id={mask}>
+        <rect x="88" y="88" width="524" height="524" fill="#fff" />
+        <path d="M150 530V406a41 41 0 0 1 82 0V530ZM463 530V406a41 41 0 0 1 82 0V530ZM150 425H545V530H150Z" fill="#000" stroke="#000" strokeWidth="30" strokeLinejoin="round" />
+      </mask>
+      <path d="M110 494V264L350 140L590 264V494" fill="none" stroke="currentColor" strokeWidth="40" strokeLinecap="round" strokeLinejoin="round" />
+      <path mask={`url(#${mask})`} d="M178 272H330V430H178ZM368 272H518V430H368Z" />
+      <path d="M150 530V406a41 41 0 0 1 82 0V530ZM463 530V406a41 41 0 0 1 82 0V530ZM150 425H545V530H150ZM204 528h26v30a13 13 0 0 1-26 0ZM460 528h26v30a13 13 0 0 1-26 0Z" />
     </svg>
   );
 }

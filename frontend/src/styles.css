@@ -253,11 +253,12 @@ ul, ol { list-style: none; }
   display: grid;
   place-items: center;
   /* Brand colours, the same in light and dark mode */
-  background: #26312A;
-  color: #E2B486;
-  box-shadow: inset 0 0 0 1px rgba(226, 180, 134, 0.14);
+  /* The logo tile: white with a dark outline, the same in light and dark mode */
+  background: #fff;
+  color: #1b1b1b;
+  box-shadow: inset 0 0 0 2px #1b1b1b;
 }
-.logo-icon svg { width: 26px; height: 26px; }
+.logo-icon svg { width: 31px; height: 31px; }
 .logo-words { display: flex; flex-direction: column; }
 .logo-text { font-family: var(--font-serif); font-size: 21px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
 .logo-text .num { color: var(--brand-brass); font-style: italic; }
